@@ -80,7 +80,6 @@ cp .env.example .env
 # Editar .env y completar DATABASE_URL apuntando a tu Postgres local.
 
 uv sync                              # Instala dependencias del lockfile
-uv run alembic-style apply           # (Ver migrations/ — aplicar SQL plano)
 
 # Aplicar migraciones manualmente sobre la base local:
 psql $DATABASE_URL -f migrations/001_normalize.sql
