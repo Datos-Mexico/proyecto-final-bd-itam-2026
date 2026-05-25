@@ -8,7 +8,17 @@
 
 ## Equipo académico
 
-_Sección poblada en sub-fase 1.3 desde la fuente única del observatorio._
+Equipo técnico fundador del Observatorio Datos México. Información
+extraída de `lib/team.ts` del repositorio del sitio canónico
+(`Datos-Mexico/datos-mexico-site`, rama `main`), filtrando por
+`tag === "equipo-tecnico-fundador"`.
+
+| Nombre | Afiliación | GitHub |
+|---|---|---|
+| David Fernando Ávila Díaz | Estudiante de Ciencia de Datos, ITAM | [@DabtcAvila](https://github.com/DabtcAvila) |
+| Gerardo André Butrón Ramírez | Estudiante de Ciencia de Datos, ITAM | [@butronand-png](https://github.com/butronand-png) |
+| Emiliano Sebastián Millán Giffard | Estudiante de Ciencia de Datos, ITAM | [@emilianomillan](https://github.com/emilianomillan) |
+| José Roberto Uribe Clemente | Estudiante de Ciencia de Datos, ITAM | [@RobertoUribeClemente](https://github.com/RobertoUribeClemente) |
 
 ## Resumen del proyecto
 
