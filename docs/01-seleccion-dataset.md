@@ -17,8 +17,13 @@ nómina, tipo de personal, universo laboral, nivel salarial, y los
 sueldos bruto y neto del nombramiento. Al corte preservado en el
 dump físico del 2026-04-20, el dataset registra **246,821
 nombramientos** distribuidos en **73 sectores de gobierno** con
-**51,710 identidades distintas** (personas físicas con uno o más
-nombramientos vigentes).
+**246,490 cuartetos identitarios únicos** sobre
+`(nombre, apellido_1, apellido_2, edad)`. Sin acceso a un
+identificador único como CURP o RFC, no es posible determinar con
+certeza cuántas personas físicas distintas componen el padrón; los
+305 cuartetos que se repiten (en 636 filas, 0.26% del total) pueden
+corresponder a homónimos genuinos o a la misma persona con
+múltiples nombramientos.
 
 ## 2. Origen y autoría
 
@@ -88,7 +93,7 @@ físico del 2026-04-20.
 
 | Columna del CSV | Tipo lógico | Cardinalidad | Notas |
 |---|---|---|---|
-| `nombre` | texto identitario | 51,710 distintos | Primer nombre del servidor. |
+| `nombre` | texto identitario | 51,710 strings distintos (universo léxico) | Primer nombre del servidor. |
 | `apellido_1` | texto identitario | 7,864 distintos | Apellido paterno. |
 | `apellido_2` | texto identitario | 7,872 distintos | Apellido materno; algunos servidores no tienen. |
 | `sexo` | categórico | 3 valores | MASCULINO, FEMENINO, NA. |
