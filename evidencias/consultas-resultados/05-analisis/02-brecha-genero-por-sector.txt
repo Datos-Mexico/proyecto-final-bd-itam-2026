@@ -1,0 +1,28 @@
+Ejecutado contra DB: proyecto_academico_staging (post-normalización a 4NF, esquema personas + nombramientos)
+Archivo: sql/05-analisis/02-brecha-genero-por-sector.sql
+Fecha de ejecución: 2026-05-25 15:04:06 CST
+---
+                                                          sector                                                          | avg_sueldo_masc | avg_sueldo_feme | brecha_pct | total_nombramientos 
+--------------------------------------------------------------------------------------------------------------------------+-----------------+-----------------+------------+---------------------
+ CAJA DE PREVISION DE LA POLICIA AUXILIAR DE LA CDMX                                                                      |        17189.77 |        13336.00 |      28.90 |                 144
+ SECRETARIA DE TRABAJO Y FOMENTO AL EMPLEO EN LA CDMX                                                                     |        15082.91 |        12444.18 |      21.20 |                 595
+ JEFATURA DE GOBIERNO DE LA CDMX                                                                                          |        18877.39 |        15667.27 |      20.49 |                 554
+ COORDINACION GENERAL DEL CENTRO DE COMANDO, CONTROL, COMPUTO, COMUNICACIONES Y CONTACTO CIUDADANO DE LA CIUDAD DE MEXICO |        18549.72 |        15478.00 |      19.85 |                 487
+ SECRETARIA DE GOBIERNO DE LA CDMX                                                                                        |        16310.56 |        13930.02 |      17.09 |                1313
+ ORGANISMO REGULADOR DE TRANSPORTE                                                                                        |        14156.85 |        12116.43 |      16.84 |                 285
+ SECRETARIA DE MOVILIDAD DE LA CDMX                                                                                       |        15809.05 |        13613.53 |      16.13 |                1669
+ SECRETARIA DE TURISMO DE LA CDMX                                                                                         |        22210.97 |        19280.44 |      15.20 |                 150
+ PLANTA PRODUCTORA DE MEZCLAS ASFALTICAS                                                                                  |        13393.50 |        11648.57 |      14.98 |                 293
+ UNIVERSIDAD DE LA POLICIA DE LA CIUDAD DE MEXICO                                                                         |        13249.15 |        11577.91 |      14.43 |                 362
+ SECRETARIA DE LA CONTRALORIA GENERAL DE LA CDMX                                                                          |        22582.67 |        19735.19 |      14.43 |                 707
+ AGENCIA DIGITAL DE INNOVACION PUBLICA                                                                                    |        19796.75 |        17301.58 |      14.42 |                 767
+ SECRETARIA DE DESARROLLO URBANO Y VIVIENDA DE LA CDMX                                                                    |        15130.09 |        13237.41 |      14.30 |                 745
+ ALCALDIA DE CUAJIMALPA DE MORELOS                                                                                        |         9845.13 |         8759.22 |      12.40 |                4393
+ SECRETARIA DE ADMINISTRACION Y FINANZAS DE LA CDMX                                                                       |        14422.75 |        12919.16 |      11.64 |                7985
+ SECRETARIA DE OBRAS Y SERVICIOS DE LA CDMX                                                                               |        11216.42 |        10059.88 |      11.50 |                5090
+ FISCALIA GENERAL DE JUSTICIA DE LA CIUDAD DE MEXICO                                                                      |        23550.25 |        21152.25 |      11.34 |               14620
+ ALCALDIA DE LA MAGDALENA CONTRERAS                                                                                       |         9635.95 |         8676.94 |      11.05 |                3699
+ SECRETARIA DE EDUCACION, CIENCIA, TECNOLOGIA E INNOVACION DE LA CDMX                                                     |        18948.11 |        17084.03 |      10.91 |                1039
+ SECRETARIA DE SEGURIDAD CIUDADANA DE LA CDMX                                                                             |        17125.50 |        15684.92 |       9.18 |               49765
+(20 rows)
+

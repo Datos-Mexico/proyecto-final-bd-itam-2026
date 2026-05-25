@@ -1,0 +1,11 @@
+Ejecutado contra DB: proyecto_academico_staging (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/03-estadisticas-numericas.sql
+Fecha de ejecución: 2026-05-25 15:01:29 CST
+---
+   columna    | n_no_null |  media   | desv_est | minimo |   p25   | mediana  |   p75    |  maximo   
+--------------+-----------+----------+----------+--------+---------+----------+----------+-----------
+ edad         |    246821 |    42.48 |     9.39 |     16 |   36.00 |    41.00 |    50.00 |        60
+ sueldo_bruto |    246821 | 13225.32 |  9094.33 | 461.00 | 8115.00 | 10410.00 | 16451.00 | 111178.00
+ sueldo_neto  |    246821 | 11796.00 |  7142.09 | 859.17 | 7549.19 |  9594.49 | 14605.06 |  83013.92
+(3 rows)
+
