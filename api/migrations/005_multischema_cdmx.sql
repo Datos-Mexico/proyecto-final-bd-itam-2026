@@ -12,9 +12,13 @@
 --   - Foreign keys between the moved tables keep working (FKs are OID-based).
 --   - Materialized views keep their data and UNIQUE indexes (no re-aggregation).
 --   - Views keep their OID-bound column references.
--- The app uses unqualified table names everywhere; setting
--- `search_path='cdmx, public'` in app/database.py lets existing SQL resolve
--- to cdmx.* first and falls back to public.* for `users`.
+-- The app resolves namespaces via explicit schema qualification:
+-- SQLModel models declare `__table_args__ = {"schema": "cdmx"}` and
+-- raw SQL strings prefix tables with `cdmx.*` (CDMX) or `public.*`
+-- (users). A connection-level `search_path` is NOT used because
+-- Neon's pgbouncer transaction pooling does not preserve session
+-- state across transactions — a startup-time search_path would
+-- drop out whenever pgbouncer hands a query to a different backend.
 
 BEGIN;
 
