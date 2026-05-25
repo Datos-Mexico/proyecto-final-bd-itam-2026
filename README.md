@@ -69,7 +69,7 @@ Cobertura empírica al corte preservado en el dump físico del
 | Sueldo bruto mediana | $10,410.00 MXN |
 | Edad promedio | 42.48 años |
 
-La respuesta extensa a las 16 preguntas de la Etapa 1 de la rúbrica
+La respuesta extensa a las 13 preguntas de la Etapa 1 de la rúbrica
 (resumen, origen y autoría, justificación, disponibilidad y acceso,
 periodicidad, dimensiones, diccionario, variables cuantitativas,
 variables cualitativas, texto no estructurado, series temporales,
