@@ -1,0 +1,13 @@
+Ejecutado contra DB: proyecto_academico_staging (post-normalización a 4NF, esquema personas + nombramientos)
+Archivo: sql/05-analisis/01-distribucion-salarial.sql
+Fecha de ejecución: 2026-05-25 15:04:06 CST
+---
+      rango      |   n    | sueldo_promedio |  pct  
+-----------------+--------+-----------------+-------
+ 1. Menos de $5K |  10924 |         3839.61 |  4.43
+ 2. $5K - $10K   | 105126 |         7884.81 | 42.59
+ 3. $10K - $20K  | 101616 |        14517.20 | 41.17
+ 4. $20K - $40K  |  24433 |        26307.37 |  9.90
+ 5. Más de $40K  |   4722 |        58342.89 |  1.91
+(5 rows)
+
