@@ -227,6 +227,17 @@ uv run uvicorn app.main:app --reload --port 8000
 open http://localhost:8000/docs
 ```
 
+> **Nota sobre migraciones del backend (`api/migrations/`)**: las
+> migraciones SQL del paquete `api/migrations/` son la cadena que el
+> backend completo del observatorio aplica sobre Neon. Si seguiste
+> los pasos 4 y 5 de este README, la normalización ya está
+> completa: en ese caso **omite `migrations/001_normalize.sql`** (la
+> base ya está normalizada) y aplica únicamente
+> `migrations/002_users.sql`, `003_indexes_and_extensions.sql`,
+> `004_materialized_views.sql`, `005_multischema_cdmx.sql`, y
+> `008_users_is_admin.sql`. Si en cambio cargaste sólo el staging
+> (paso 2A o 2B) sin normalizar, aplica también `001_normalize.sql`.
+
 ### Paso 7 — Correr la suite de tests (opcional)
 
 ```bash

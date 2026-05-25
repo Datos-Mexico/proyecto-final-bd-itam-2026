@@ -103,6 +103,13 @@ LEFT JOIN cat_niveles_salariales cns ON cns.id = n.nivel_salarial_id;
 
 -- ------------------------------------------------------------
 -- Paso 6 — Drop de la tabla staging (una vez verificada la migración)
+--
+-- Después de este DROP, las consultas de `sql/02-exploracion/*.sql`
+-- (Etapa 2) ya no podrán ejecutarse contra esta base: dependen de
+-- la tabla `servidores_publicos` desnormalizada. Los outputs de
+-- esas exploraciones ya están preservados en
+-- `evidencias/consultas-resultados/02-exploracion/`. Si necesitas
+-- re-ejecutarlas, restaura el dump físico en una base separada.
 -- ------------------------------------------------------------
 
 DROP TABLE servidores_publicos CASCADE;
