@@ -93,22 +93,36 @@ porque:
 persona_id →→ {puesto_id, sector_id, tipo_nomina_id, tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id, fecha_ingreso, sueldo_bruto, sueldo_neto}
 ```
 
-Una persona física puede tener **múltiples nombramientos
-vigentes simultáneos** o **nombramientos consecutivos**
-preservados en el padrón. Esta es la dependencia multivaluada
-principal del dataset y motiva el split a dos tablas separadas
-(la regla 4NF estándar):
+El modelo permite que una persona física tenga **múltiples
+nombramientos** (simultáneos o consecutivos) preservados en el
+padrón. Aunque empíricamente el padrón vigente al corte exhibe
+duplicación marginal (cardinalidad observada ≈ 1:1), el esquema
+4NF separa estructuralmente las dos entidades para acomodar la
+dependencia multivaluada cuando se obtenga un identificador único
+que permita deduplicar:
 
 - `personas` (datos identitarios)
 - `nombramientos` (datos del nombramiento, con FK a persona)
 
-**Verificación empírica**: la exploración SQL encontró que sólo
-**51,710 nombres distintos** existen en **246,821 filas** del
-padrón — proporción ~21% — confirmando que el cuarteto identitario
-se repite intensivamente. Aunque algunos casos sean homónimos
-legítimos, la inmensa mayoría sugiere fuertemente que el mismo
-individuo ocupa varios nombramientos. (Ver
-`evidencias/consultas-resultados/02-exploracion/04-duplicados-categoricos.txt`.)
+**Verificación empírica**: la exploración SQL identificó 51,710
+strings distintos en la columna `nombre` sobre 246,821 filas. Esta
+cifra es del **universo léxico** de primeros nombres (cadenas como
+`JUAN`, `MARÍA`), no de personas físicas: una misma persona y
+muchas personas pueden compartir el mismo primer nombre. El proxy
+empírico correcto para personas físicas es el cuarteto
+`(nombre, apellido_1, apellido_2, edad)`, sobre el cual la
+evidencia muestra **246,490 cuartetos únicos en 246,821 filas
+(99.87%)**: solamente 305 cuartetos se repiten en 636 filas
+(0.26%). Sin acceso a un identificador único como CURP o RFC, no
+es posible distinguir entre cuartetos que son homónimos genuinos
+(personas distintas con mismo nombre, apellidos y edad) y
+cuartetos que serían la misma persona en múltiples nombramientos.
+La duplicación cuarteto es marginal y no constituye motor empírico
+de la decisión 4NF; el split académicamente correcto se justifica
+por la separación de entidades léxicas (nombre, apellidos) de los
+atributos laborales del nombramiento, la reducción de redundancia
+textual, y la preparación estructural para deduplicación futura.
+(Ver `evidencias/consultas-resultados/02-exploracion/04-duplicados-categoricos.txt`.)
 
 ### Caveat sobre DMV1
 
