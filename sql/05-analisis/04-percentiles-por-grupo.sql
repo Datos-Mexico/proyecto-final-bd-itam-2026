@@ -12,7 +12,7 @@
 WITH grupo_etario AS (
     SELECT
         CASE
-            WHEN p.edad < 26 THEN '1. 18-25'
+            WHEN p.edad < 26 THEN '1. 16-25'
             WHEN p.edad < 36 THEN '2. 26-35'
             WHEN p.edad < 46 THEN '3. 36-45'
             WHEN p.edad < 56 THEN '4. 46-55'

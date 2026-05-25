@@ -86,12 +86,24 @@ quiere expresar "nivel jerárquico salarial").
   años), sugiriendo que la antigüedad no es el factor dominante en
   la determinación del sueldo en la administración de la CDMX
   (probablemente domina el tabulador del puesto).
-- **El P90 sí crece con la edad**: $15,275 para hombres 18-25 vs
+- **El P90 sí crece con la edad**: $15,275 para hombres 16-25 vs
   $24,305 para hombres 46-55 — los puestos más altos están
   dominados por servidores con más edad.
 - **Una persona registrada con sexo `NA`** aparece exclusivamente
   en el rango 46-55. Es el caso único del valor ternario en
   `cat_sexos`.
+
+> **Nota académica sobre el bucket etario más joven**: el bucket
+> `1. 18-25` en el output preservado en
+> `evidencias/consultas-resultados/05-analisis/04-percentiles-por-grupo.txt`
+> incluye empíricamente edades 16-17 (el mínimo del padrón es 16
+> años). El script SQL en
+> [`sql/05-analisis/04-percentiles-por-grupo.sql`](../sql/05-analisis/04-percentiles-por-grupo.sql)
+> fue corregido al label `1. 16-25` para reflejar el rango real. La
+> evidencia se preserva tal cual fue capturada como artefacto
+> histórico del proceso académico ejecutado en su momento; al
+> re-ejecutar el script corregido, el output mostrará el nuevo
+> label sin cambiar el número de filas ni los valores agregados.
 
 ## Cómo reproducir los outputs
 
