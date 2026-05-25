@@ -1,0 +1,23 @@
+Ejecutado contra DB: proyecto_academico_staging (post-normalización a 4NF, esquema personas + nombramientos)
+Archivo: sql/05-analisis/03-ranking-puestos-window.sql
+Fecha de ejecución: 2026-05-25 15:04:06 CST
+---
+ row_n | rank_n | dense_rank_n |          puesto          | sueldo_promedio | n_ocupantes | sueldo_min | sueldo_max 
+-------+--------+--------------+--------------------------+-----------------+-------------+------------+------------
+     1 |      1 |            1 | JEFE DE GOBIERNO         |       111178.00 |           1 |  111178.00 |  111178.00
+     3 |      2 |            2 | SECRETARIO               |       109981.00 |          23 |  109981.00 |  109981.00
+     4 |      2 |            2 | SECRETARIO PARTICULAR AA |       109981.00 |           1 |  109981.00 |  109981.00
+     2 |      2 |            2 | COMISIONADO              |       109981.00 |           1 |  109981.00 |  109981.00
+     6 |      5 |            3 | COORDINADOR GENERAL B    |       104740.00 |          21 |  104740.00 |  104740.00
+     8 |      5 |            3 | SUBSECRETARIO            |       104740.00 |           8 |  104740.00 |  104740.00
+     5 |      5 |            3 | ALCALDE DE LA CDMX       |       104740.00 |          16 |  104740.00 |  104740.00
+     9 |      5 |            3 | TESORERO                 |       104740.00 |           1 |  104740.00 |  104740.00
+     7 |      5 |            3 | OFICIAL MAYOR SSCCDMX    |       104740.00 |           1 |  104740.00 |  104740.00
+    10 |     10 |            4 | ASESOR D                 |        99967.00 |           6 |   99967.00 |   99967.00
+    13 |     10 |            4 | PROCURADOR FISCAL        |        99967.00 |           1 |   99967.00 |   99967.00
+    12 |     10 |            4 | DIRECTOR GENERAL C       |        99967.00 |           3 |   99967.00 |   99967.00
+    11 |     10 |            4 | COORDINADOR GENERAL A    |        99967.00 |          29 |   99967.00 |   99967.00
+    15 |     14 |            5 | DIRECTOR EJECUTIVO D     |        95327.00 |           3 |   95327.00 |   95327.00
+    14 |     14 |            5 | COORDINADOR EJECUTIVO    |        95327.00 |           2 |   95327.00 |   95327.00
+(15 rows)
+
