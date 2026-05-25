@@ -84,3 +84,59 @@ git diff --cached | grep -E \
 Resultado esperado: cero matches. Si emerge match, el archivo
 ofensivo no se commitea hasta haber redactado manualmente la línea
 con un placeholder genérico.
+
+## Incidente operacional resuelto académicamente: stacked PRs con squash merge
+
+Durante el cierre operacional de FASE 1 del proyecto se aplicó merge
+en cascada de cuatro Pull Requests stacked (cada uno con base en el
+anterior, no en `main` directamente). Tras mergear el primer PR con
+estrategia squash, las ramas feature aguas arriba quedaron con
+history divergente respecto al squash commit recién creado en `main`,
+lo cual generó:
+
+- Cierre automático del segundo PR sin merge (su base apuntaba a
+  una rama recién eliminada).
+- Conflictos de history en los PRs aguas arriba.
+
+Este es un comportamiento conocido de GitHub con stacked PRs +
+squash merge: el squash colapsa varios commits en uno solo en
+`main`, perdiendo la paternidad git de los commits feature de la
+base anterior.
+
+La resolución académicamente correcta fue:
+
+1. **Rebase** de cada rama feature sobre `main` actualizado
+   (`git rebase --onto main <tip-de-base-anterior>`), donde el
+   `<tip-de-base-anterior>` es el SHA del último commit que
+   pertenecía a la rama base previa antes de su squash. Los
+   objetos git de esos commits "huérfanos" permanecen accesibles
+   hasta que el garbage collector los recoja, por lo que el SHA
+   sigue resolviéndose vía `git cat-file -t`.
+2. **Force-push** con `--force-with-lease` a la rama feature
+   (riesgo operacional bajo porque la rama es aislada, no es
+   `main` ni infraestructura compartida).
+3. **Creación de PR nuevo** apuntando a `main`. El PR cerrado
+   automáticamente no se pudo reabrir vía API
+   (`gh pr reopen N` arrojó error GraphQL
+   "Could not open the pull request"), por lo que se optó por la
+   ruta pragmática de un PR nuevo con la misma rama feature.
+4. **Merge squash** del PR nuevo con `--delete-branch`.
+
+El historial visible en `main` resultante consta del commit
+inicial de bootstrap más cuatro squash commits (uno por sub-fase
+operacional del proyecto académico: estructura base, snapshot del
+código backend, scripts SQL académicos, README maestro y docs
+académicos). La numeración de los PRs en GitHub mostrará cuatro
+PRs cerrados sin merge (`#2`, `#3`, `#4` originales + tentativa
+de reapertura) y cuatro PRs mergeados (`#1`, `#5`, `#6`, `#7`).
+
+Las ramas feature originales fueron eliminadas tras cada merge
+exitoso. El procedimiento completo es reproducible: cualquier
+persona con permisos de escritura sobre el repositorio puede
+ejecutar el mismo flujo ante un escenario análogo de stacked PRs.
+
+Esta documentación se preserva en el repositorio como parte del
+principio constitucional de transparencia académica del
+observatorio: los retos operacionales encontrados durante el
+desarrollo del proyecto se documentan junto con las decisiones
+que los resolvieron, no se ocultan.
