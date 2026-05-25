@@ -3,8 +3,11 @@
 -- Replaces 5 of the 11 SQL queries in app/routers/dashboard.py with MVs
 -- backed by UNIQUE indexes (required for REFRESH MATERIALIZED VIEW CONCURRENTLY).
 --
--- Refresh strategy: POST /api/v1/admin/refresh-materialized-views
--- (JWT-protected). Call after /api/v1/ingest/csv runs or on a nightly cron.
+-- Refresh strategy en producción: POST /api/v1/admin/refresh-materialized-views
+-- (JWT-protected, presente sólo en el backend completo del observatorio,
+-- NO en este snapshot académico). En local se refresca corriendo
+-- `REFRESH MATERIALIZED VIEW CONCURRENTLY mv_dashboard_<name>;` directamente
+-- vía psql después de re-poblar los datos.
 --
 -- The 6 remaining SQLs in dashboard.py (SALARY_DISTRIBUTION, AGE_DISTRIBUTION,
 -- CONTRACT_TYPES, PERSONAL_TYPES, BRUTO_NETO_BY_RANGE) stay inline because

@@ -122,7 +122,7 @@ Para el dashboard hay 5 MVs que NO son parte del modelo relacional — son cach�
 | `cdmx.mv_dashboard_salary_by_age` | 5 | 5 buckets etarios |
 | `cdmx.mv_dashboard_seniority` | 6 | 6 buckets de antigüedad |
 
-Refresh: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected), corre `REFRESH MATERIALIZED VIEW CONCURRENTLY` sobre los 5.
+Refresh en producción: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected, expuesto sólo en el backend completo del observatorio, no en este snapshot académico). En local se refrescan manualmente vía psql con `REFRESH MATERIALIZED VIEW CONCURRENTLY cdmx.mv_dashboard_<name>;` sobre las 5.
 
 ---
 
