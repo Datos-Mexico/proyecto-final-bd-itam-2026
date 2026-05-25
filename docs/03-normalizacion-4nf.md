@@ -6,9 +6,12 @@ Esta etapa transforma el estado raw de staging (tabla
 `servidores_publicos` desnormalizada con seis catálogos extraídos)
 al esquema final 4NF compuesto por **diez tablas**: `personas`,
 `nombramientos`, y ocho catálogos. La transformación está
-empíricamente justificada por los hallazgos de la Etapa 2 (cuartetos
-identitarios repetidos, `sexo` y `nivel_salarial` con baja
-cardinalidad).
+empíricamente justificada por los hallazgos de la Etapa 2: `sexo`
+y `nivel_salarial` con baja cardinalidad (catalogables), y
+redundancia textual de cuartetos identitarios sobre 246,821 filas
+que ameritan separación de entidades léxicas (nombre, apellidos) en
+una tabla `personas` distinta de la relación laboral
+(`nombramientos`).
 
 ## Punto de partida (capa staging)
 
@@ -46,10 +49,14 @@ Sumario:
 - **DF de catálogos**: cada FK determina los atributos
   descriptivos del catálogo (e.g. `puesto_id → {nombre del puesto}`,
   `sector_id → {clave, nombre del sector}`).
-- **Dependencia multivaluada**: `persona → nombramientos`. Una
-  persona puede tener N nombramientos. La normalización a 4NF
-  separa este 1:N en dos tablas (`personas` y `nombramientos` con
-  FK `persona_id`).
+- **Dependencia multivaluada potencial**: `persona → nombramientos`.
+  El modelo permite que una persona física tenga N nombramientos. El
+  padrón vigente al corte exhibe duplicación marginal (305 cuartetos
+  en 636 filas, 0.26%), por lo que la cardinalidad observada es
+  esencialmente 1:1. La normalización a 4NF separa estructuralmente
+  en dos tablas (`personas` y `nombramientos` con FK `persona_id`)
+  para acomodar la dependencia multivaluada cuando se obtenga un
+  identificador único que permita deduplicar.
 
 ## Esquema final 4NF
 
@@ -104,25 +111,28 @@ restaurado localmente:
 | Filas en `cat_niveles_salariales` | ≈720 | **721** |
 
 La relación inicial 1:1 entre `personas` y `nombramientos` es
-correcta porque el padrón publica una fila por nombramiento vigente;
-si una persona física aparece en dos nombramientos, el split la
-duplica en `personas` con dos `id` distintos (esto es una decisión
-académica simplificadora — en un modelo de producción se requeriría
-una clave natural para deduplicar; ver caveats abajo).
+correcta porque el padrón publica una fila por nombramiento
+vigente y la migración no aplica deduplicación. El esquema final
+permite cardinalidad N:1 (varios nombramientos apuntando a la
+misma persona) cuando se obtenga un identificador único; mientras
+tanto, los 305 cuartetos identitarios que se repiten en 636 filas
+(0.26%) producen registros separados en `personas` que podrían
+consolidarse mediante record linkage futuro (ver caveats abajo).
 
 ## Caveats académicos
 
 1. **Deduplicación de personas físicas**: la migración del CSV al
-   esquema normalizado **no deduplica** personas físicas con
-   múltiples nombramientos. Esto es porque el CSV no provee una
-   clave natural confiable (no hay CURP, RFC ni identificador
-   único) y la combinación `(nombre, apellido_1, apellido_2, edad)`
-   tiene falsos positivos (homónimos legítimos). En un sistema de
-   producción real se aplicaría record linkage probabilístico; en
-   este proyecto académico se opta por preservar 1:1 en la
-   migración inicial y exponer la dependencia multivaluada como
-   modelo formal (`nombramientos.persona_id` permite N→1 si futura
-   deduplicación lo amerita).
+   esquema normalizado **no deduplica** personas físicas. La
+   evidencia empírica (246,490 cuartetos únicos sobre 246,821 filas,
+   99.87%) sugiere que la deduplicación realista colapsaría como
+   máximo 331 filas, no un porcentaje material del padrón. Sin un
+   identificador único en el CSV (CURP, RFC) no se puede distinguir
+   entre los 305 cuartetos duplicados que son homónimos genuinos vs
+   la misma persona en múltiples nombramientos. En este proyecto
+   académico se preserva el mapeo 1:1 en la migración inicial y se
+   expone la dependencia multivaluada como modelo formal:
+   `nombramientos.persona_id` permite N→1 si el padrón futuro
+   incorpora un identificador único que habilite record linkage.
 2. **Inconsistencias preservadas**: el 4.63% de filas con
    `sueldo_neto > sueldo_bruto` (Etapa 2) se preserva tal cual en
    el esquema 4NF — no se filtra ni se corrige por respeto a la
