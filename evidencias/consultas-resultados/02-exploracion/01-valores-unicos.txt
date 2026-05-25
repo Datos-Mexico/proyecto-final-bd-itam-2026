@@ -1,0 +1,24 @@
+Ejecutado contra DB: proyecto_academico_staging (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/01-valores-unicos.sql
+Fecha de ejecución: 2026-05-25 15:01:28 CST
+---
+               metrica                | valor  
+--------------------------------------+--------
+ Apellido_1 distintos                 |   7864
+ Apellido_2 distintos                 |   7872
+ Edades distintas                     |     45
+ Fechas_ingreso distintas             |  14133
+ Nivel_salarial distintos             |    721
+ Nombres distintos                    |  51710
+ Puesto_id distintos                  |   1772
+ Sector_id distintos                  |     73
+ Sexo distintos                       |      3
+ Sueldo_bruto distintos               |    858
+ Sueldo_neto distintos                |    859
+ Tipo_contratacion_id distintos       |      7
+ Tipo_nomina_id distintos             |      7
+ Tipo_personal_id distintos           |     11
+ Total de filas (servidores_publicos) | 246821
+ Universo_id distintos                |     27
+(16 rows)
+
