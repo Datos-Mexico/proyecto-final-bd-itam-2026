@@ -54,7 +54,8 @@ Cobertura empírica al corte preservado en el dump físico del
 | Métrica | Valor |
 |---|---|
 | Total de nombramientos (filas) | 246,821 |
-| Distintos nombres de pila | 51,710 |
+| Combinaciones identitarias únicas `(nombre, ap1, ap2, edad)` | 246,490 sobre 246,821 (99.87%) |
+| Primeros nombres distintos (universo léxico) | 51,710 |
 | Distintos apellidos paternos | 7,864 |
 | Distintos apellidos maternos | 7,872 |
 | Sectores de gobierno | 73 |
