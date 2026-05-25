@@ -17,8 +17,11 @@ El código completo está en [`api/`](../api/) y consta de:
 - 8 routers en `api/app/routers/` (auth, servidores, sectores,
   catalogos, dashboard, analytics, personas, nombramientos)
 - 11 schemas Pydantic en `api/app/schemas/`
-- 7 migraciones SQL en `api/migrations/` (alineadas con los scripts
-  académicos de `sql/`)
+- 6 migraciones SQL forward + 1 rollback en `api/migrations/`,
+  numeradas 001-005 + 008 (las migraciones 006 y 007 del backend
+  completo tocaban datasets fuera del scope CDMX —ENIGH y
+  CONSAR— y se omiten intencionalmente de este snapshot
+  académico)
 - 13 archivos de tests en `api/tests/`
 
 ## Endpoints expuestos
