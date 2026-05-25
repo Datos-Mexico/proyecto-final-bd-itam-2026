@@ -41,8 +41,11 @@ fecha, DB y archivo ejecutado.
 (extracto de [`01-valores-unicos.txt`](../evidencias/consultas-resultados/02-exploracion/01-valores-unicos.txt))
 
 - 246,821 filas totales.
-- 51,710 nombres distintos sobre 246,821 filas — fuerte indicio de
-  personas con múltiples nombramientos.
+- 51,710 strings distintos en `nombre` (universo léxico de primeros
+  nombres como `JUAN`, `MARÍA`), no del número de personas físicas:
+  la evidencia empírica sobre el cuarteto identitario `(nombre, ap1,
+  ap2, edad)` muestra 246,490 cuartetos únicos sobre 246,821 filas
+  (99.87%), indicando duplicación marginal.
 - 1,772 puestos distintos — la columna `puesto` es claramente
   catalogable (cardinalidad baja relativa al total).
 - Sólo 3 valores en `sexo` (MASCULINO, FEMENINO, NA).
@@ -69,14 +72,22 @@ Observaciones académicas:
 (extracto de [`04-duplicados-categoricos.txt`](../evidencias/consultas-resultados/02-exploracion/04-duplicados-categoricos.txt))
 
 El cuarteto identitario `(nombre, apellido_1, apellido_2, edad)`
-aparece más de una vez en miles de casos. Este hallazgo es el
-**motor empírico de la decisión de normalización a 4NF**: una
-persona física puede ocupar varios nombramientos simultáneos o
-consecutivos, por lo que separar identidad (`personas`) de relación
-laboral (`nombramientos`) es la decisión 4NF correcta. Esta
-separación elimina la dependencia funcional implícita
-`{nombre, apellido_1, apellido_2, edad} → atributos identitarios`
-que en la tabla desnormalizada se duplicaría en cada fila.
+aparece más de una vez en 305 casos (636 filas, 0.26% del padrón).
+La duplicación cuarteto es marginal y probablemente representa
+homónimos genuinos (personas distintas con mismo nombre, apellidos
+y edad). Sin acceso a CURP/RFC no es posible determinar con
+certeza si los 305 cuartetos repetidos corresponden a homónimos o
+a la misma persona en múltiples nombramientos.
+
+La decisión académica de normalizar a 4NF separando `personas` y
+`nombramientos` se justifica empíricamente NO por una duplicación
+masiva que el padrón no exhibe, sino por: (a) separar entidades
+léxicas (nombres, apellidos) de tabuladores administrativos del
+nombramiento; (b) reducir redundancia textual (51,710 strings en
+catálogo reutilizable + 246,821 referencias FK vs 246,821 strings
+repetidos); (c) dejar el esquema estructuralmente listo para una
+futura deduplicación de personas si se obtiene acceso a un
+identificador único.
 
 ### Valores nulos
 
@@ -121,11 +132,13 @@ de normalización a 4NF:
 1. **Catalogación de `sexo` y `nivel_salarial`** — ambas columnas
    son claramente catálogos (3 y 721 valores distintos
    respectivamente). La capa 03 las extrae.
-2. **Separación `personas` / `nombramientos`** — el hallazgo de
-   cuartetos identitarios repetidos confirma que el padrón
-   contiene `1 fila por nombramiento`, no `1 fila por persona`.
-   Para preservar la dependencia funcional `persona_id → {nombre,
-   apellido_1, apellido_2, sexo, edad}` y eliminar la dependencia
-   multivaluada implícita, se requiere split en dos tablas.
+2. **Separación `personas` / `nombramientos`** — el padrón publica
+   una fila por nombramiento vigente, no una fila por persona.
+   Aunque empíricamente la duplicación cuarteto es marginal (0.26%),
+   el split académicamente correcto separa entidades léxicas
+   (nombre, apellidos, sexo, edad) de los atributos laborales del
+   nombramiento, reduce redundancia textual, y deja el esquema
+   preparado para integrar deduplicación futura si se obtiene un
+   identificador único como CURP o RFC.
 3. **Documentación de caveats** — el 4.63% de inconsistencias
    `neto > bruto` se preserva pero se documenta en el diccionario.
