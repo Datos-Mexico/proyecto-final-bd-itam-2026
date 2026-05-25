@@ -1,0 +1,55 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+ENV/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data
+data/*.csv
+data/*.json
+data/*.parquet
+data/*.xlsx
+!data/README.md
+
+# Database dumps
+*.sql.bak
+*.dump
+*.dump.bak
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+dist/
+build/
+*.tar.gz
