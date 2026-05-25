@@ -20,7 +20,7 @@ datasets mexicanos vía SDK Python, API REST y sitio canónico.
 | **2026-04-22** | Despliegue de la primera versión de la API a Railway (`api.datos-itam.org`). Sitio canónico inicial. Suite de tests E2E con Playwright contra producción. |
 | **Abril 2026** | Cierre del entregable académico del proyecto final del curso de Bases de Datos. |
 | **Mayo 2026** | Expansión del observatorio a tres datasets adicionales: ENIGH 2024 (Encuesta Nacional de Ingresos y Gastos de los Hogares), CONSAR AFORE recursos (Sistema de Ahorro para el Retiro), ENOE 15+ (Encuesta Nacional de Ocupación y Empleo). |
-| **2026-05-23** | Audit interno completo del observatorio (Fase 1 inventario + Fase 2 contrato API). Reportes en `docs/internal/audit-2026-05/`. |
+| **2026-05-23** | Audit interno completo del observatorio (Fase 1 inventario + Fase 2 contrato API). Reportes preservados en `docs/internal/audit-2026-05/` del repositorio privado del backend del observatorio — no están en este repo académico. |
 
 ---
 
