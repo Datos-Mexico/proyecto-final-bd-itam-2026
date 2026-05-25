@@ -10,7 +10,7 @@ y el sitio canónico del Observatorio Datos México.
 
 El código completo está en [`api/`](../api/) y consta de:
 
-- 1 entry point (`api/main.py`)
+- 1 entry point informativo (`api/main.py` — apunta al servidor real en `app.main:app`)
 - 7 módulos core en `api/app/` (config, database, auth, dependencies,
   rate_limit, main, __init__)
 - 4 modelos ORM SQLModel en `api/app/models/`
