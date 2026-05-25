@@ -1,0 +1,23 @@
+Ejecutado contra DB: proyecto_academico_staging (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/06-valores-nulos.sql
+Fecha de ejecución: 2026-05-25 15:01:29 CST
+---
+       columna        | n_null | pct_null 
+----------------------+--------+----------
+ apellido_1           |      0 |   0.0000
+ apellido_2           |      0 |   0.0000
+ edad                 |      0 |   0.0000
+ fecha_ingreso        |      0 |   0.0000
+ id_nivel_salarial    |      0 |   0.0000
+ nombre               |      0 |   0.0000
+ puesto_id            |      0 |   0.0000
+ sector_id            |      0 |   0.0000
+ sexo                 |      0 |   0.0000
+ sueldo_bruto         |      0 |   0.0000
+ sueldo_neto          |      0 |   0.0000
+ tipo_contratacion_id |      0 |   0.0000
+ tipo_nomina_id       |      0 |   0.0000
+ tipo_personal_id     |      0 |   0.0000
+ universo_id          |      0 |   0.0000
+(15 rows)
+

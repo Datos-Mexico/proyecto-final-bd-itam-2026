@@ -1,0 +1,25 @@
+Ejecutado contra DB: proyecto_academico_staging (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/04-duplicados-categoricos.sql
+Fecha de ejecución: 2026-05-25 15:01:29 CST
+---
+                     metrica                      | valor  
+--------------------------------------------------+--------
+ Cuartetos identitarios con > 1 aparición         |    305
+ Filas totales explicadas por cuartetos repetidos |    636
+ Personas físicas estimadas (cuartetos únicos)    | 246490
+(3 rows)
+
+  nombre   | apellido_1 | apellido_2 | edad | nombramientos 
+-----------+------------+------------+------+---------------
+ RESERVADO | RESERVADO  | RESERVADO  |   24 |             4
+ RESERVADO | RESERVADO  | RESERVADO  |   39 |             4
+ RICARDO   | MARTINEZ   | MARTINEZ   |   48 |             4
+ PEDRO     | HERNANDEZ  | HERNANDEZ  |   41 |             3
+ RAUL      | RODRIGUEZ  | MARTINEZ   |   41 |             3
+ PEDRO     | LOPEZ      | HERNANDEZ  |   41 |             3
+ GUADALUPE | GONZALEZ   | MARTINEZ   |   41 |             3
+ JUAN      | MARTINEZ   | GONZALEZ   |   41 |             3
+ ANTONIO   | GONZALEZ   | GONZALEZ   |   41 |             3
+ JORGE     | GARCIA     | RODRIGUEZ  |   41 |             3
+(10 rows)
+

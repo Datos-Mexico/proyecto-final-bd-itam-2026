@@ -1,0 +1,56 @@
+Ejecutado contra DB: proyecto_academico_staging (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/05-distribucion-categorica.sql
+Fecha de ejecución: 2026-05-25 15:01:29 CST
+---
+   sexo    |   n    |  pct  
+-----------+--------+-------
+ MASCULINO | 140784 | 57.04
+ FEMENINO  | 106036 | 42.96
+ NA        |      1 |  0.00
+(3 rows)
+
+ tipo_contratacion  |   n    |  pct  
+--------------------+--------+-------
+ BASE               | 113346 | 45.92
+ LISTA DE RAYA BASE |  51440 | 20.84
+ HABERES            |  39672 | 16.07
+ PROVISIONAL        |  27015 | 10.95
+ HONORARIOS         |  14648 |  5.93
+ EVENTUAL           |    399 |  0.16
+ CARACTER SOCIAL    |    301 |  0.12
+(7 rows)
+
+         tipo_personal          |   n   |  pct  
+--------------------------------+-------+-------
+ SINDICALIZADOS                 | 99212 | 40.20
+ HABERES                        | 37200 | 15.07
+ CONFIANZA                      | 32171 | 13.03
+ ESTABILIDAD LABORAL            | 27015 | 10.95
+ BASE NO SINDICALIZADO          | 21111 |  8.55
+ HONORARIOS                     | 14648 |  5.93
+ ESTRUCTURA                     | 10949 |  4.44
+ INTERINATO                     |  2159 |  0.87
+ LISTA DE RAYA NO SINDICALIZADO |  1656 |  0.67
+ EVENTUALES                     |   399 |  0.16
+ CARACTER SOCIAL                |   301 |  0.12
+(11 rows)
+
+                       sector                        |   n   
+-----------------------------------------------------+-------
+ SECRETARIA DE SEGURIDAD CIUDADANA DE LA CDMX        | 49765
+ SECRETARIA DE SALUD DE LA CDMX                      | 23591
+ FISCALIA GENERAL DE JUSTICIA DE LA CIUDAD DE MEXICO | 14620
+ SISTEMA DE AGUAS DE LA CIUDAD DE MEXICO             | 12316
+ ALCALDIA DE IZTAPALAPA                              | 12070
+ ALCALDIA DE GUSTAVO A. MADERO                       | 10661
+ ALCALDIA DE CUAUHTEMOC                              |  9009
+ ALCALDIA DE VENUSTIANO CARRANZA                     |  8349
+ SECRETARIA DE ADMINISTRACION Y FINANZAS DE LA CDMX  |  7985
+ ALCALDIA DE COYOACAN                                |  6783
+ ALCALDIA DE ALVARO OBREGON                          |  6159
+ ALCALDIA DE BENITO JUAREZ                           |  5890
+ ALCALDIA DE XOCHIMILCO                              |  5568
+ ALCALDIA DE IZTACALCO                               |  5434
+ ALCALDIA DE TLALPAN                                 |  5388
+(15 rows)
+
