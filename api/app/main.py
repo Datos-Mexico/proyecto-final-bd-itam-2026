@@ -24,7 +24,7 @@ API REST del proyecto académico de Bases de Datos COM-12101-001
 
 **Dataset expuesto:**
 - **Servidores públicos CDMX** (schema `cdmx`): 246K registros del Padrón
-  de Servidores Públicos de la Ciudad de México (datos.gob.mx).
+  de Servidores Públicos de la Ciudad de México (datos.cdmx.gob.mx).
 
 **Estructura del esquema normalizado (4NF):**
 - 2 tablas de datos (`personas`, `nombramientos`)

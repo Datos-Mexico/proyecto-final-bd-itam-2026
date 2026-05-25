@@ -54,7 +54,8 @@ Cobertura empírica al corte preservado en el dump físico del
 | Métrica | Valor |
 |---|---|
 | Total de nombramientos (filas) | 246,821 |
-| Distintos nombres de pila | 51,710 |
+| Combinaciones identitarias únicas `(nombre, ap1, ap2, edad)` | 246,490 sobre 246,821 (99.87%) |
+| Primeros nombres distintos (universo léxico) | 51,710 |
 | Distintos apellidos paternos | 7,864 |
 | Distintos apellidos maternos | 7,872 |
 | Sectores de gobierno | 73 |
@@ -68,7 +69,7 @@ Cobertura empírica al corte preservado en el dump físico del
 | Sueldo bruto mediana | $10,410.00 MXN |
 | Edad promedio | 42.48 años |
 
-La respuesta extensa a las 16 preguntas de la Etapa 1 de la rúbrica
+La respuesta extensa a las 13 preguntas de la Etapa 1 de la rúbrica
 (resumen, origen y autoría, justificación, disponibilidad y acceso,
 periodicidad, dimensiones, diccionario, variables cuantitativas,
 variables cualitativas, texto no estructurado, series temporales,
@@ -225,6 +226,17 @@ uv run uvicorn app.main:app --reload --port 8000
 # Abrir Swagger UI
 open http://localhost:8000/docs
 ```
+
+> **Nota sobre migraciones del backend (`api/migrations/`)**: las
+> migraciones SQL del paquete `api/migrations/` son la cadena que el
+> backend completo del observatorio aplica sobre Neon. Si seguiste
+> los pasos 4 y 5 de este README, la normalización ya está
+> completa: en ese caso **omite `migrations/001_normalize.sql`** (la
+> base ya está normalizada) y aplica únicamente
+> `migrations/002_users.sql`, `003_indexes_and_extensions.sql`,
+> `004_materialized_views.sql`, `005_multischema_cdmx.sql`, y
+> `008_users_is_admin.sql`. Si en cambio cargaste sólo el staging
+> (paso 2A o 2B) sin normalizar, aplica también `001_normalize.sql`.
 
 ### Paso 7 — Correr la suite de tests (opcional)
 

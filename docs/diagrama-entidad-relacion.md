@@ -122,7 +122,7 @@ Para el dashboard hay 5 MVs que NO son parte del modelo relacional — son cach�
 | `cdmx.mv_dashboard_salary_by_age` | 5 | 5 buckets etarios |
 | `cdmx.mv_dashboard_seniority` | 6 | 6 buckets de antigüedad |
 
-Refresh: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected), corre `REFRESH MATERIALIZED VIEW CONCURRENTLY` sobre los 5.
+Refresh en producción: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected, expuesto sólo en el backend completo del observatorio, no en este snapshot académico). En local se refrescan manualmente vía psql con `REFRESH MATERIALIZED VIEW CONCURRENTLY cdmx.mv_dashboard_<name>;` sobre las 5.
 
 ---
 
@@ -218,13 +218,11 @@ Table users {
 | `cat_puestos` | 1,772 |
 | `cat_sectores` | 73 |
 | `cat_tipos_contratacion` | 7 |
-| `cat_tipos_personal` | 11 (aprox.) |
+| `cat_tipos_personal` | 11 |
 | `cat_sexos` | 3 |
 | `cat_tipos_nomina`, `cat_universos`, `cat_niveles_salariales` | pequeños |
 | `users` | 0 |
 
-Regenera este doc cuando cambie el schema:
-```bash
-# (cuando tengamos un script de generación)
-./api/scripts/regenerate-erd
-```
+Cuando cambie el schema, regenera manualmente el diagrama
+ejecutando `pg_dump --schema-only` sobre la base local y
+actualizando el bloque Mermaid + DBML de este documento.

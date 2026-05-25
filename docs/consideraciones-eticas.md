@@ -114,14 +114,21 @@ hallazgo.
 
 ## 6. Deduplicación de personas físicas
 
-El esquema 4NF separa `personas` de `nombramientos`, pero la
-migración inicial **no deduplica** personas con múltiples
-nombramientos (mapeo 1:1 entre filas del CSV y filas de
-`personas`). Esto deja un **artefacto académico**: el conteo
-`SELECT COUNT(*) FROM personas` (246,821) es igual al conteo de
-nombramientos, pero la realidad social es que hay
-probablemente ~150,000 personas físicas que ocupan esos 246,821
-nombramientos.
+El conteo `SELECT COUNT(*) FROM personas` arroja 246,821, igual al
+conteo de nombramientos. La evidencia empírica disponible (246,490
+cuartetos identitarios únicos sobre `(nombre, apellido_1,
+apellido_2, edad)`) sugiere que el padrón tiene esencialmente una
+persona única por nombramiento, con solamente 305 cuartetos
+repetidos en 636 filas (0.26%). Sin acceso a un identificador único
+como CURP o RFC, no es posible deduplicar personas físicas con
+certeza académica: los cuartetos repetidos podrían corresponder a
+homónimos genuinos (personas distintas con el mismo nombre,
+apellidos y edad) o a la misma persona con múltiples nombramientos.
+La normalización a 4NF aplicada en este proyecto NO pretende
+deduplicar personas físicas; separa entidades léxicas (nombres,
+apellidos) en catálogos reutilizables y normaliza los tabuladores
+administrativos, dejando el padrón estructuralmente listo para una
+futura deduplicación si se obtiene acceso a un identificador único.
 
 **Caveat académico**: la deduplicación probabilística requiere:
 
