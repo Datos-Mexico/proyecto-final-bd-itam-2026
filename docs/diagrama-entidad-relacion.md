@@ -218,13 +218,11 @@ Table users {
 | `cat_puestos` | 1,772 |
 | `cat_sectores` | 73 |
 | `cat_tipos_contratacion` | 7 |
-| `cat_tipos_personal` | 11 (aprox.) |
+| `cat_tipos_personal` | 11 |
 | `cat_sexos` | 3 |
 | `cat_tipos_nomina`, `cat_universos`, `cat_niveles_salariales` | pequeños |
 | `users` | 0 |
 
-Regenera este doc cuando cambie el schema:
-```bash
-# (cuando tengamos un script de generación)
-./api/scripts/regenerate-erd
-```
+Cuando cambie el schema, regenera manualmente el diagrama
+ejecutando `pg_dump --schema-only` sobre la base local y
+actualizando el bloque Mermaid + DBML de este documento.
