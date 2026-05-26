@@ -77,7 +77,6 @@ multischema del backend) o en `public` (default local).
    - `puesto_id`, `sector_id`, `tipo_nomina_id`,
      `tipo_contratacion_id`, `tipo_personal_id`, `universo_id`,
      `nivel_salarial_id` (FKs a catálogos)
-   - `fecha_ingreso`
    - `sueldo_bruto`, `sueldo_neto`
 
 ### Catálogos
