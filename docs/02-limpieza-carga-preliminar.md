@@ -23,12 +23,11 @@ PostgreSQL local puede recrear los outputs.
 | [`sql/01-staging/01-create-staging.sql`](../sql/01-staging/01-create-staging.sql) | DDL de la tabla de staging y los 6 catálogos. |
 | [`sql/01-staging/02-cargar-csv.sql`](../sql/01-staging/02-cargar-csv.sql) | Script referencial de carga desde el CSV original (COPY + poblado de catálogos). |
 | [`sql/02-exploracion/01-valores-unicos.sql`](../sql/02-exploracion/01-valores-unicos.sql) | Conteo de valores distintos por columna. |
-| [`sql/02-exploracion/02-rango-fechas.sql`](../sql/02-exploracion/02-rango-fechas.sql) | Rango temporal y distribución por década. |
 | [`sql/02-exploracion/03-estadisticas-numericas.sql`](../sql/02-exploracion/03-estadisticas-numericas.sql) | Media, desviación, percentiles de edad y sueldos. |
 | [`sql/02-exploracion/04-duplicados-categoricos.sql`](../sql/02-exploracion/04-duplicados-categoricos.sql) | Detección de personas físicas con múltiples nombramientos. |
 | [`sql/02-exploracion/05-distribucion-categorica.sql`](../sql/02-exploracion/05-distribucion-categorica.sql) | Frecuencias relativas de sexo, tipos, sectores top. |
 | [`sql/02-exploracion/06-valores-nulos.sql`](../sql/02-exploracion/06-valores-nulos.sql) | Conteo y porcentaje de NULL por columna. |
-| [`sql/02-exploracion/07-inconsistencias.sql`](../sql/02-exploracion/07-inconsistencias.sql) | Detección de violaciones semánticas (edad <15, sueldos negativos, neto>bruto, fechas futuras, nombres ultracortos). |
+| [`sql/02-exploracion/07-inconsistencias.sql`](../sql/02-exploracion/07-inconsistencias.sql) | Detección de violaciones semánticas (edad <15, sueldos negativos, neto>bruto, nombres ultracortos). |
 
 ## Outputs reales capturados
 
@@ -49,6 +48,19 @@ fecha, DB y archivo ejecutado.
 - 1,772 puestos distintos — la columna `puesto` es claramente
   catalogable (cardinalidad baja relativa al total).
 - Sólo 3 valores en `sexo` (MASCULINO, FEMENINO, NA).
+
+## Rango de Fechas
+
+El dataset oficial "Remuneraciones al personal de la Ciudad de México"
+publicado por la Secretaría de Administración y Finanzas (SAF) del
+Gobierno de la Ciudad de México en el Portal de Datos Abiertos no
+contiene columnas de naturaleza temporal (fechas, marcas de tiempo,
+periodos). Las 17 columnas del CSV oficial son atributos identitarios
+(nombre, apellidos, sexo, edad), administrativos (puesto, sector,
+tipo de nómina, universo laboral, nivel salarial) y económicos
+(sueldo bruto, sueldo neto). El análisis "Rango de Fechas" de la
+rúbrica de Etapa 2 no aplica a este dataset por ausencia de
+atributos temporales en la fuente oficial.
 
 ### Estadísticas numéricas
 
@@ -93,7 +105,7 @@ identificador único.
 
 (extracto de [`06-valores-nulos.txt`](../evidencias/consultas-resultados/02-exploracion/06-valores-nulos.txt))
 
-**Cero valores NULL en las 15 columnas no-PK** del staging. El
+**Cero valores NULL en las 14 columnas no-PK** del staging. El
 dataset está completamente lleno. Esto incluye `apellido_2`, lo que
 sugiere que los servidores sin segundo apellido aparecen con string
 vacío en el CSV original — un detalle académico para documentar al
@@ -110,7 +122,6 @@ adjudicar `NOT NULL` vs `NULL` en el esquema normalizado.
 | `edad > 90` | 0 | 0 |
 | `sueldo_bruto <= 0` | 0 | 0 |
 | `sueldo_neto <= 0` | 0 | 0 |
-| `fecha_ingreso > CURRENT_DATE` | 0 | 0 |
 | `nombre LENGTH < 2` | 0 | 0 |
 
 **Hallazgo crítico**: 11,426 filas (4.63% del padrón) presentan
