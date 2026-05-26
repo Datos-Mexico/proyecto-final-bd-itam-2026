@@ -60,7 +60,6 @@ CREATE TABLE nombramientos (
     tipo_personal_id INT REFERENCES cat_tipos_personal(id),
     universo_id INT REFERENCES cat_universos(id),
     nivel_salarial_id INT REFERENCES cat_niveles_salariales(id),
-    fecha_ingreso DATE,
     sueldo_bruto NUMERIC(12,2),
     sueldo_neto NUMERIC(12,2)
 );
@@ -68,12 +67,12 @@ CREATE TABLE nombramientos (
 INSERT INTO nombramientos (
     persona_id, puesto_id, sector_id, tipo_nomina_id,
     tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id,
-    fecha_ingreso, sueldo_bruto, sueldo_neto
+    sueldo_bruto, sueldo_neto
 )
 SELECT
     sp.id, sp.puesto_id, sp.sector_id, sp.tipo_nomina_id,
     sp.tipo_contratacion_id, sp.tipo_personal_id, sp.universo_id,
-    cns.id, sp.fecha_ingreso, sp.sueldo_bruto, sp.sueldo_neto
+    cns.id, sp.sueldo_bruto, sp.sueldo_neto
 FROM servidores_publicos sp
 LEFT JOIN cat_niveles_salariales cns ON cns.clave = sp.id_nivel_salarial;
 
@@ -101,7 +100,7 @@ SELECT
     p.id, p.nombre, p.apellido_1, p.apellido_2,
     cs.nombre AS sexo, p.edad,
     n.puesto_id, n.tipo_nomina_id, n.tipo_contratacion_id,
-    n.tipo_personal_id, n.fecha_ingreso, n.universo_id, n.sector_id,
+    n.tipo_personal_id, n.universo_id, n.sector_id,
     cns.clave AS id_nivel_salarial, n.sueldo_bruto, n.sueldo_neto
 FROM personas p
 JOIN nombramientos n ON n.persona_id = p.id

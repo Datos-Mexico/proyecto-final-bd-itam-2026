@@ -1,6 +1,6 @@
 -- Migration 004: Materialized views for /dashboard/stats hot path.
 --
--- Replaces 5 of the 11 SQL queries in app/routers/dashboard.py with MVs
+-- Replaces 4 of the 11 SQL queries in app/routers/dashboard.py with MVs
 -- backed by UNIQUE indexes (required for REFRESH MATERIALIZED VIEW CONCURRENTLY).
 --
 -- Refresh strategy en producción: POST /api/v1/admin/refresh-materialized-views
@@ -9,7 +9,7 @@
 -- `REFRESH MATERIALIZED VIEW CONCURRENTLY mv_dashboard_<name>;` directamente
 -- vía psql después de re-poblar los datos.
 --
--- The 6 remaining SQLs in dashboard.py (SALARY_DISTRIBUTION, AGE_DISTRIBUTION,
+-- The remaining inline SQLs in dashboard.py (SALARY_DISTRIBUTION, AGE_DISTRIBUTION,
 -- CONTRACT_TYPES, PERSONAL_TYPES, BRUTO_NETO_BY_RANGE) stay inline because
 -- they are cheap enough with existing indexes and don't justify materializing.
 
@@ -40,8 +40,7 @@ SELECT
     AVG(n.sueldo_bruto - n.sueldo_neto)::float AS avg_deduction,
     CASE WHEN AVG(n.sueldo_bruto) > 0
         THEN (AVG(n.sueldo_bruto - n.sueldo_neto) / AVG(n.sueldo_bruto) * 100)::float
-        ELSE 0 END AS avg_deduction_pct,
-    AVG(EXTRACT(YEAR FROM AGE(CURRENT_DATE, n.fecha_ingreso)))::float AS avg_seniority
+        ELSE 0 END AS avg_deduction_pct
 FROM nombramientos n
 JOIN personas p ON n.persona_id = p.id
 LEFT JOIN cat_sexos csex ON p.sexo_id = csex.id
@@ -122,81 +121,5 @@ SELECT label, avg, ord FROM (
 
 CREATE UNIQUE INDEX idx_mv_dashboard_salary_by_age_label
     ON mv_dashboard_salary_by_age(label);
-
--- ============================================================
--- 5. mv_dashboard_seniority (merges seniority distribution + salary_by_seniority)
--- ============================================================
-DROP MATERIALIZED VIEW IF EXISTS mv_dashboard_seniority CASCADE;
-CREATE MATERIALIZED VIEW mv_dashboard_seniority AS
-SELECT label, ord, count_all, count_with_salary, avg_salary FROM (
-    SELECT '0-2 años' AS label, 1 AS ord,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 0 AND 2) AS count_all,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 0 AND 2) AS count_with_salary,
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 0 AND 2) AS avg_salary
-    UNION ALL
-    SELECT '3-5 años', 2,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 3 AND 5),
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 3 AND 5),
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 3 AND 5)
-    UNION ALL
-    SELECT '6-10 años', 3,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 6 AND 10),
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 6 AND 10),
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 6 AND 10)
-    UNION ALL
-    SELECT '11-20 años', 4,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 11 AND 20),
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 11 AND 20),
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 11 AND 20)
-    UNION ALL
-    SELECT '21-30 años', 5,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 21 AND 30),
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 21 AND 30),
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) BETWEEN 21 AND 30)
-    UNION ALL
-    SELECT '30+ años', 6,
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) > 30),
-        (SELECT COUNT(*) FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) > 30),
-        (SELECT AVG(sueldo_bruto)::float FROM nombramientos
-         WHERE fecha_ingreso IS NOT NULL AND sueldo_bruto IS NOT NULL
-           AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, fecha_ingreso)) > 30)
-) sub;
-
-CREATE UNIQUE INDEX idx_mv_dashboard_seniority_label
-    ON mv_dashboard_seniority(label);
 
 COMMIT;

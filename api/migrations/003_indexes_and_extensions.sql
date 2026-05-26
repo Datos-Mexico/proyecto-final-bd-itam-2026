@@ -37,11 +37,6 @@ CREATE INDEX IF NOT EXISTS idx_personas_apellido_2_trgm
 CREATE INDEX IF NOT EXISTS idx_nomb_tipo_nomina
     ON nombramientos(tipo_nomina_id);
 
--- fecha_ingreso is used by seniority buckets (EXTRACT YEAR FROM AGE(...))
--- and by ORDER BY in /servidores?order_by=fecha_ingreso
-CREATE INDEX IF NOT EXISTS idx_nomb_fecha_ingreso
-    ON nombramientos(fecha_ingreso);
-
 -- Composite index for /analytics/puestos/ranking (GROUP BY puesto, AVG(sueldo))
 CREATE INDEX IF NOT EXISTS idx_nomb_puesto_sueldo
     ON nombramientos(puesto_id, sueldo_bruto);

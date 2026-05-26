@@ -8,8 +8,8 @@ async def test_dashboard_stats_shape(client):
         "genderGapPercent", "hombres", "mujeres", "avgSalaryMale", "avgSalaryFemale",
         "salaryDistribution", "ageDistribution", "contractTypes", "personalTypes",
         "salaryByAge", "top15Sectors", "allSectors", "genderGapBySector",
-        "topPositions", "seniorityDistribution", "salaryBySeniority",
-        "avgSeniority", "avgNetSalary", "avgDeduction", "avgDeductionPercent",
+        "topPositions",
+        "avgNetSalary", "avgDeduction", "avgDeductionPercent",
         "brutoNetoByRange",
     ]
     for key in required_keys:

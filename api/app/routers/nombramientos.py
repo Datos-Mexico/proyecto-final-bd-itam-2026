@@ -54,7 +54,6 @@ _NOMB_EXAMPLE = {
     "tipo_personal_id": 2,
     "universo_id": 3,
     "nivel_salarial_id": 11,
-    "fecha_ingreso": "2015-03-12",
     "sueldo_bruto": "18500.00",
     "sueldo_neto": "14820.50",
 }

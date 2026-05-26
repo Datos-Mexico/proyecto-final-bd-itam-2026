@@ -11,7 +11,6 @@ ALTER MATERIALIZED VIEW IF EXISTS cdmx.mv_dashboard_overview       SET SCHEMA pu
 ALTER MATERIALIZED VIEW IF EXISTS cdmx.mv_dashboard_sectors        SET SCHEMA public;
 ALTER MATERIALIZED VIEW IF EXISTS cdmx.mv_dashboard_top_positions  SET SCHEMA public;
 ALTER MATERIALIZED VIEW IF EXISTS cdmx.mv_dashboard_salary_by_age  SET SCHEMA public;
-ALTER MATERIALIZED VIEW IF EXISTS cdmx.mv_dashboard_seniority      SET SCHEMA public;
 
 -- Compatibility view
 ALTER VIEW IF EXISTS cdmx.v_servidores_publicos SET SCHEMA public;

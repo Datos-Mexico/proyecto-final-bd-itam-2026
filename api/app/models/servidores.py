@@ -1,4 +1,3 @@
-import datetime
 from decimal import Decimal
 
 from sqlmodel import Field, SQLModel
@@ -31,6 +30,5 @@ class Nombramiento(SQLModel, table=True):
     tipo_personal_id: int | None = Field(default=None, foreign_key="cdmx.cat_tipos_personal.id")
     universo_id: int | None = Field(default=None, foreign_key="cdmx.cat_universos.id")
     nivel_salarial_id: int | None = Field(default=None, foreign_key="cdmx.cat_niveles_salariales.id")
-    fecha_ingreso: datetime.date | None = None
     sueldo_bruto: Decimal | None = None
     sueldo_neto: Decimal | None = None

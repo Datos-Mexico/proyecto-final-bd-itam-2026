@@ -61,12 +61,12 @@ def get_filters(
 
 
 ALLOWED_ORDER_COLUMNS = {
-    "id", "nombre", "apellido_1", "edad", "sueldo_bruto", "sueldo_neto", "fecha_ingreso",
+    "id", "nombre", "apellido_1", "edad", "sueldo_bruto", "sueldo_neto",
 }
 
 # Columns that live on Persona vs Nombramiento
 _PERSONA_ORDER_COLS = {"id", "nombre", "apellido_1", "edad"}
-_NOMBRAMIENTO_ORDER_COLS = {"sueldo_bruto", "sueldo_neto", "fecha_ingreso"}
+_NOMBRAMIENTO_ORDER_COLS = {"sueldo_bruto", "sueldo_neto"}
 
 
 def apply_filters(stmt: Select, filters: ServidorFilters, *, _sexo_joined: bool = False) -> Select:
