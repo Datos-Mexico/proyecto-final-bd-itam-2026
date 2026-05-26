@@ -1,9 +1,13 @@
-# Plan de aplicación de correcciones del peer review académico externo
+# Plan de aplicación de correcciones de la auto-revisión académica interna
 
-Documento interno del equipo técnico fundador. Registra la matriz
-completa de cambios que se aplicarán sobre el repositorio académico
-en respuesta al peer review externo independiente ejecutado el
-2026-05-25, antes de hacer público el repo + invitar al profesor.
+Plan de aplicación de correcciones derivadas de la auto-revisión
+académica interna del equipo previa a la publicación del repositorio
+el 2026-05-25. Esta revisión académica fue ejecutada por el equipo
+técnico antes de hacer público el repositorio, con criterios rigurosos
+de validación contra la rúbrica del curso, contra la evidencia empírica
+disponible en el repo, y contra los principios constitucionales del
+Observatorio Datos México (transparencia 100%, replicabilidad,
+corrección académica).
 
 Branch de trabajo: `fix/peer-review-corrections`. Ningún cambio toca
 `main` directamente; cada sub-fase termina con commits granulares y
