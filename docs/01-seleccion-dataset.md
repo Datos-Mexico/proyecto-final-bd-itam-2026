@@ -75,10 +75,15 @@ físico del 2026-04-20.
 
 ## 6. Dimensiones del dataset
 
+17 columnas del CSV oficial: _id, nombre, apellido_1, apellido_2, sexo,
+edad, n_puesto, id_tipo_nomina, tipo_contratacion, tipo_personal,
+id_universo, n_universo, id_sector, n_cabeza_sector, id_nivel_salarial,
+sueldo_tabular_bruto, sueldo_tabular_neto.
+
 | Dimensión | Valor |
 |---|---|
 | Filas (nombramientos) | 246,821 |
-| Columnas (atributos por fila) | 16 |
+| Columnas (atributos por fila) | 17 |
 | Sectores de gobierno | 73 |
 | Puestos distintos | 1,772 |
 | Tipos de contratación | 7 |
@@ -105,7 +110,6 @@ físico del 2026-04-20.
 | `tipo_nomina` | numérico categórico | 7 valores | Catalogable. |
 | `universo` | categórico | 27 valores | Catalogable. |
 | `nivel_salarial` | numérico categórico | 721 valores | Catalogable. |
-| `fecha_ingreso` | fecha | 14,133 distintas | Serie temporal. |
 | `sueldo_bruto` | numérico continuo | 858 valores | NUMERIC(12,2). |
 | `sueldo_neto` | numérico continuo | 859 valores | NUMERIC(12,2). |
 
@@ -139,12 +143,11 @@ discretas con bajo ruido.
 
 ## 11. Series temporales
 
-`fecha_ingreso` define la única dimensión temporal del dataset: la
-fecha de inicio del nombramiento. Permite reconstruir series de
-antigüedad y distribución temporal de los nombramientos vigentes.
-Rango empírico del dump: el padrón vigente al 2026-04-20 contiene
-nombramientos con fecha de ingreso a lo largo de 14,133 fechas
-distintas (~38.6 años).
+El dataset oficial no contiene atributos de naturaleza temporal
+(fechas, marcas de tiempo, periodos). Es un padrón estático que
+representa el universo de servidores públicos vigentes al corte de
+publicación. Por tanto el análisis de series temporales no aplica
+directamente a este dataset.
 
 ## 12. Visión estratégica
 
