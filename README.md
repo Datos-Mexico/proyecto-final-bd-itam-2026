@@ -48,6 +48,9 @@ semestre. La composición vigente del observatorio se documenta en
 Este repositorio refleja exclusivamente el equipo técnico fundador
 que ejecutó el proyecto académico del curso COM-12101-001.
 
+Detalles sobre la atribución de trabajo por integrante se documentan
+en [`docs/atribucion-equipo.md`](docs/atribucion-equipo.md).
+
 ---
 
 ## Conjunto de datos
