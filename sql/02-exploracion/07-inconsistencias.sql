@@ -3,8 +3,8 @@
 --
 -- Detección de inconsistencias semánticas en el dataset:
 -- edades fuera del rango laboral plausible, sueldos negativos o
--- cero, sueldo neto mayor que sueldo bruto, fechas de ingreso
--- futuras, longitudes anómalas en nombres, etc.
+-- cero, sueldo neto mayor que sueldo bruto, longitudes anómalas en
+-- nombres, etc.
 -- ============================================================
 
 -- Edades fuera del rango laboral plausible (15 a 90 años)
@@ -35,12 +35,6 @@ SELECT 'sueldo_neto > sueldo_bruto', COUNT(*), ROUND(100.0 * COUNT(*) / (SELECT 
 FROM servidores_publicos
 WHERE sueldo_bruto IS NOT NULL AND sueldo_neto IS NOT NULL
   AND sueldo_neto > sueldo_bruto
-UNION ALL
-
--- Fechas de ingreso en el futuro
-SELECT 'fecha_ingreso > CURRENT_DATE', COUNT(*), ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM servidores_publicos), 4)
-FROM servidores_publicos
-WHERE fecha_ingreso IS NOT NULL AND fecha_ingreso > CURRENT_DATE
 UNION ALL
 
 -- Nombres extremadamente cortos

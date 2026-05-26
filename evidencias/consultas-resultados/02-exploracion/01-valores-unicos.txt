@@ -7,7 +7,6 @@ Fecha de ejecución: 2026-05-25 15:01:28 CST
  Apellido_1 distintos                 |   7864
  Apellido_2 distintos                 |   7872
  Edades distintas                     |     45
- Fechas_ingreso distintas             |  14133
  Nivel_salarial distintos             |    721
  Nombres distintos                    |  51710
  Puesto_id distintos                  |   1772
@@ -20,5 +19,5 @@ Fecha de ejecución: 2026-05-25 15:01:28 CST
  Tipo_personal_id distintos           |     11
  Total de filas (servidores_publicos) | 246821
  Universo_id distintos                |     27
-(16 rows)
+(15 rows)
 

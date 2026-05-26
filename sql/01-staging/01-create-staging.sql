@@ -65,7 +65,6 @@ CREATE TABLE servidores_publicos (
     tipo_nomina_id       INTEGER REFERENCES cat_tipos_nomina(id),
     tipo_contratacion_id INTEGER REFERENCES cat_tipos_contratacion(id),
     tipo_personal_id     INTEGER REFERENCES cat_tipos_personal(id),
-    fecha_ingreso        DATE,
     universo_id          INTEGER REFERENCES cat_universos(id),
     sector_id            INTEGER REFERENCES cat_sectores(id),
     id_nivel_salarial    INTEGER,

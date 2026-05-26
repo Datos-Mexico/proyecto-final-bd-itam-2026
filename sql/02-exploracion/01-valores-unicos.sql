@@ -28,8 +28,6 @@ SELECT 'Tipo_contratacion_id distintos', COUNT(DISTINCT tipo_contratacion_id) FR
 UNION ALL
 SELECT 'Tipo_personal_id distintos', COUNT(DISTINCT tipo_personal_id)     FROM servidores_publicos
 UNION ALL
-SELECT 'Fechas_ingreso distintas',   COUNT(DISTINCT fecha_ingreso)        FROM servidores_publicos
-UNION ALL
 SELECT 'Universo_id distintos',      COUNT(DISTINCT universo_id)          FROM servidores_publicos
 UNION ALL
 SELECT 'Sector_id distintos',        COUNT(DISTINCT sector_id)            FROM servidores_publicos

@@ -35,7 +35,6 @@ CREATE TEMP TABLE servidores_csv_raw (
     tipo_nomina          VARCHAR(100),
     tipo_contratacion    VARCHAR(100),
     tipo_personal        VARCHAR(100),
-    fecha_ingreso        DATE,
     universo             VARCHAR(200),
     sector_clave         VARCHAR(20),
     sector_nombre        VARCHAR(500),
@@ -100,13 +99,13 @@ ORDER BY 1;
 INSERT INTO servidores_publicos (
     nombre, apellido_1, apellido_2, sexo, edad,
     puesto_id, tipo_nomina_id, tipo_contratacion_id,
-    tipo_personal_id, fecha_ingreso, universo_id, sector_id,
+    tipo_personal_id, universo_id, sector_id,
     id_nivel_salarial, sueldo_bruto, sueldo_neto
 )
 SELECT
     r.nombre, r.apellido_1, r.apellido_2, r.sexo, r.edad,
     cp.id, ctn.id, ctc.id,
-    ctp.id, r.fecha_ingreso, cu.id, cs.id,
+    ctp.id, cu.id, cs.id,
     r.nivel_salarial, r.sueldo_bruto, r.sueldo_neto
 FROM servidores_csv_raw r
 LEFT JOIN cat_puestos             cp  ON cp.nombre  = r.puesto

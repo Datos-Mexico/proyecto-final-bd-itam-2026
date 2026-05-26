@@ -51,7 +51,6 @@ CREATE TABLE nombramientos (
     tipo_personal_id     INTEGER REFERENCES cat_tipos_personal(id),
     universo_id          INTEGER REFERENCES cat_universos(id),
     nivel_salarial_id    INTEGER REFERENCES cat_niveles_salariales(id),
-    fecha_ingreso        DATE,
     sueldo_bruto         NUMERIC(12,2),
     sueldo_neto          NUMERIC(12,2)
 );
