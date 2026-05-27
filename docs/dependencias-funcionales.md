@@ -11,7 +11,7 @@ durante el proceso de normalización a 4NF.
 Por la presencia de `id` (SERIAL PRIMARY KEY) en cada tabla:
 
 - `personas.id → {nombre, apellido_1, apellido_2, sexo_id, edad}`
-- `nombramientos.id → {persona_id, puesto_id, sector_id, tipo_nomina_id, tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id, fecha_ingreso, sueldo_bruto, sueldo_neto}`
+- `nombramientos.id → {persona_id, puesto_id, sector_id, tipo_nomina_id, tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id, sueldo_bruto, sueldo_neto}`
 - Para cada catálogo `cat_X`: `cat_X.id → {todos los atributos descriptivos}`.
 
 Estas son DFs estructurales esperadas (superclave determina al resto)
@@ -90,7 +90,7 @@ porque:
 ### DMV1. Persona → nombramientos
 
 ```
-persona_id →→ {puesto_id, sector_id, tipo_nomina_id, tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id, fecha_ingreso, sueldo_bruto, sueldo_neto}
+persona_id →→ {puesto_id, sector_id, tipo_nomina_id, tipo_contratacion_id, tipo_personal_id, universo_id, nivel_salarial_id, sueldo_bruto, sueldo_neto}
 ```
 
 El modelo permite que una persona física tenga **múltiples

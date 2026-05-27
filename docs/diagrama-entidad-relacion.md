@@ -3,7 +3,7 @@
 Auto-generado del schema real (Neon y local son idénticos).
 
 > **Namespaces** (post-migración 005):
-> - `cdmx.*` — dataset CDMX servidores públicos (10 tablas + 1 vista + 5 MVs).
+> - `cdmx.*` — dataset CDMX servidores públicos (10 tablas + 1 vista + 4 MVs).
 > - `public.users` — auth transversal. Siguen sin pertenecer a ningún dataset.
 > - Futuro: `enigh.*`, `consar.*` como esquemas hermanos.
 >
@@ -44,7 +44,6 @@ erDiagram
         int tipo_personal_id FK
         int universo_id FK
         int nivel_salarial_id FK
-        date fecha_ingreso
         numeric sueldo_bruto
         numeric sueldo_neto
     }
@@ -104,7 +103,7 @@ erDiagram
 ## Notas de normalización (4NF)
 
 - **`cdmx.personas`** contiene identidad (atributos que dependen solo de la persona: nombre, edad, sexo). Hay 246,821 personas. 1:N con `cdmx.nombramientos`.
-- **`cdmx.nombramientos`** contiene el vínculo empleado-puesto (atributos que dependen de la combinación persona + puesto: fecha_ingreso, sueldo, tipo de contratación, etc.). Hay 246,821 nombramientos — en esta carga inicial cada persona tiene exactamente 1 nombramiento vigente. El modelo **permite** N:1 para histórico/multi-empleo futuros.
+- **`cdmx.nombramientos`** contiene el vínculo empleado-puesto (atributos que dependen de la combinación persona + puesto: sueldo, tipo de contratación, nivel salarial, etc.). Hay 246,821 nombramientos — en esta carga inicial cada persona tiene exactamente 1 nombramiento vigente. El modelo **permite** N:1 para histórico/multi-empleo futuros.
 - **8 catálogos** (`cdmx.cat_*`) eliminan redundancia: en el CSV original todos los valores categóricos se repetían como strings; ahora viven una sola vez con un id numérico.
 - **`public.users`** es tabla aparte para autenticación JWT del API, en esquema `public` por ser transversal a todos los datasets (CDMX, ENIGH, CONSAR). No está relacionada con el modelo de datos CDMX.
 - **`cdmx.v_servidores_publicos`** es una **view** (no tabla) que re-construye la forma desnormalizada del CSV original haciendo JOIN de todo. Útil para validación y compatibilidad con queries legacy.
@@ -112,7 +111,7 @@ erDiagram
 
 ## Tablas materializadas (no en el ER porque son derivadas)
 
-Para el dashboard hay 5 MVs que NO son parte del modelo relacional — son cachés pre-computadas:
+Para el dashboard hay 4 MVs que NO son parte del modelo relacional — son cachés pre-computadas:
 
 | MV | Filas | Refresca desde |
 |---|---|---|
@@ -120,9 +119,8 @@ Para el dashboard hay 5 MVs que NO son parte del modelo relacional — son cach�
 | `cdmx.mv_dashboard_sectors` | 73 | `cat_sectores ⨝ nombramientos ⨝ personas` con counts + avg por género |
 | `cdmx.mv_dashboard_top_positions` | 10 | top-10 puestos con AVG(sueldo) |
 | `cdmx.mv_dashboard_salary_by_age` | 5 | 5 buckets etarios |
-| `cdmx.mv_dashboard_seniority` | 6 | 6 buckets de antigüedad |
 
-Refresh en producción: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected, expuesto sólo en el backend completo del observatorio, no en este snapshot académico). En local se refrescan manualmente vía psql con `REFRESH MATERIALIZED VIEW CONCURRENTLY cdmx.mv_dashboard_<name>;` sobre las 5.
+Refresh en producción: `POST /api/v1/admin/refresh-materialized-views` (JWT-protected, expuesto sólo en el backend completo del observatorio, no en este snapshot académico). En local se refrescan manualmente vía psql con `REFRESH MATERIALIZED VIEW CONCURRENTLY cdmx.mv_dashboard_<name>;` sobre las 4.
 
 ---
 
@@ -150,7 +148,6 @@ Table nombramientos {
   tipo_personal_id integer [ref: > cat_tipos_personal.id]
   universo_id integer [ref: > cat_universos.id]
   nivel_salarial_id integer [ref: > cat_niveles_salariales.id]
-  fecha_ingreso date
   sueldo_bruto numeric
   sueldo_neto numeric
 }

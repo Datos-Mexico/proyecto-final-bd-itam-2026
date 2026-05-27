@@ -60,7 +60,7 @@ SELECT setval('personas_id_seq', (SELECT MAX(id) FROM personas));
 INSERT INTO nombramientos (
     persona_id, puesto_id, sector_id, tipo_nomina_id,
     tipo_contratacion_id, tipo_personal_id, universo_id,
-    nivel_salarial_id, fecha_ingreso, sueldo_bruto, sueldo_neto
+    nivel_salarial_id, sueldo_bruto, sueldo_neto
 )
 SELECT
     sp.id,
@@ -71,7 +71,6 @@ SELECT
     sp.tipo_personal_id,
     sp.universo_id,
     cns.id,
-    sp.fecha_ingreso,
     sp.sueldo_bruto,
     sp.sueldo_neto
 FROM servidores_publicos sp
@@ -94,7 +93,7 @@ SELECT
     p.id, p.nombre, p.apellido_1, p.apellido_2,
     cs.nombre AS sexo, p.edad,
     n.puesto_id, n.tipo_nomina_id, n.tipo_contratacion_id,
-    n.tipo_personal_id, n.fecha_ingreso, n.universo_id, n.sector_id,
+    n.tipo_personal_id, n.universo_id, n.sector_id,
     cns.clave AS id_nivel_salarial, n.sueldo_bruto, n.sueldo_neto
 FROM personas p
 JOIN nombramientos n        ON n.persona_id = p.id

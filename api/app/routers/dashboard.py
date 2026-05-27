@@ -12,7 +12,6 @@ from app.schemas.dashboard import (
     LabelAvg,
     LabelCount,
     SectorStats,
-    SeniorityWithSalary,
     TopPosition,
 )
 from app.schemas.errors import HTTPError429
@@ -91,15 +90,6 @@ SQL_TOP_POSITIONS = (
     "ORDER BY avg_salary DESC"
 )
 
-SQL_SENIORITY_DISTRIBUTION = (
-    "SELECT label, count_all AS count FROM cdmx.mv_dashboard_seniority ORDER BY ord"
-)
-
-SQL_SALARY_BY_SENIORITY = (
-    "SELECT label, avg_salary AS avg, count_with_salary AS count "
-    "FROM cdmx.mv_dashboard_seniority ORDER BY ord"
-)
-
 SQL_BRUTO_NETO_BY_RANGE = """
 SELECT label, avg_bruto, avg_neto, count FROM (
     SELECT 'Menos de $5K' AS label,
@@ -143,8 +133,8 @@ async def _run_query(sql: str):
         "(p25/p50/p75/p90), distribuciones por sueldo / edad / contratación / "
         "tipo de personal, top 15 sectores, brecha de género por sector "
         "(top 10 por magnitud absoluta), posiciones más frecuentes, "
-        "distribución de antigüedad, y desglose bruto vs neto por rango. "
-        "Las cifras provienen mayoritariamente de las cinco materialized "
+        "y desglose bruto vs neto por rango. "
+        "Las cifras provienen mayoritariamente de las materialized "
         "views `cdmx.mv_dashboard_*` (refresco vía "
         "`POST /api/v1/admin/refresh-materialized-views`). Cache HTTP "
         "`public, max-age=3600`."
@@ -202,11 +192,6 @@ async def _run_query(sql: str):
                         "topPositions": [
                             {"name": "POLICIA", "count": 80000, "avgSalary": 13800.0}
                         ],
-                        "seniorityDistribution": [{"label": "0-5 años", "count": 64000}],
-                        "salaryBySeniority": [
-                            {"label": "0-5 años", "avg": 12000.0, "count": 64000}
-                        ],
-                        "avgSeniority": 11.4,
                         "avgNetSalary": 13950.20,
                         "avgDeduction": 2892.13,
                         "avgDeductionPercent": 17.18,
@@ -239,8 +224,6 @@ async def dashboard_stats(request: Request):
         salary_age_r,
         sectors_r,
         positions_r,
-        seniority_dist_r,
-        salary_seniority_r,
         bruto_neto_r,
     ) = await asyncio.gather(
         _run_query(SQL_OVERVIEW),
@@ -251,8 +234,6 @@ async def dashboard_stats(request: Request):
         _run_query(SQL_SALARY_BY_AGE),
         _run_query(SQL_SECTORS),
         _run_query(SQL_TOP_POSITIONS),
-        _run_query(SQL_SENIORITY_DISTRIBUTION),
-        _run_query(SQL_SALARY_BY_SENIORITY),
         _run_query(SQL_BRUTO_NETO_BY_RANGE),
     )
 
@@ -328,15 +309,6 @@ async def dashboard_stats(request: Request):
             TopPosition(name=r["name"], count=r["count"], avgSalary=round(r["avg_salary"], 2))
             for r in positions_r.mappings().all()
         ],
-        seniorityDistribution=[
-            LabelCount(label=r["label"], count=r["count"])
-            for r in seniority_dist_r.mappings().all()
-        ],
-        salaryBySeniority=[
-            SeniorityWithSalary(label=r["label"], avg=round(r["avg"], 2), count=r["count"])
-            for r in salary_seniority_r.mappings().all()
-        ],
-        avgSeniority=round(ov["avg_seniority"] or 0, 2),
         avgNetSalary=round(ov["avg_net"] or 0, 2),
         avgDeduction=round(ov["avg_deduction"] or 0, 2),
         avgDeductionPercent=round(ov["avg_deduction_pct"] or 0, 2),

@@ -44,7 +44,6 @@ ALTER MATERIALIZED VIEW public.mv_dashboard_overview       SET SCHEMA cdmx;
 ALTER MATERIALIZED VIEW public.mv_dashboard_sectors        SET SCHEMA cdmx;
 ALTER MATERIALIZED VIEW public.mv_dashboard_top_positions  SET SCHEMA cdmx;
 ALTER MATERIALIZED VIEW public.mv_dashboard_salary_by_age  SET SCHEMA cdmx;
-ALTER MATERIALIZED VIEW public.mv_dashboard_seniority      SET SCHEMA cdmx;
 
 COMMIT;
 

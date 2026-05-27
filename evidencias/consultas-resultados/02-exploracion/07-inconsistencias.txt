@@ -7,9 +7,8 @@ Fecha de ejecución: 2026-05-25 15:01:29 CST
  sueldo_neto > sueldo_bruto   | 11426 | 4.6293
  Edad < 15                    |     0 | 0.0000
  Edad > 90                    |     0 | 0.0000
- fecha_ingreso > CURRENT_DATE |     0 | 0.0000
  nombre LENGTH < 2            |     0 | 0.0000
  sueldo_bruto <= 0            |     0 | 0.0000
  sueldo_neto <= 0             |     0 | 0.0000
-(7 rows)
+(6 rows)
 

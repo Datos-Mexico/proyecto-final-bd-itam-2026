@@ -23,12 +23,12 @@ PostgreSQL local puede recrear los outputs.
 | [`sql/01-staging/01-create-staging.sql`](../sql/01-staging/01-create-staging.sql) | DDL de la tabla de staging y los 6 catálogos. |
 | [`sql/01-staging/02-cargar-csv.sql`](../sql/01-staging/02-cargar-csv.sql) | Script referencial de carga desde el CSV original (COPY + poblado de catálogos). |
 | [`sql/02-exploracion/01-valores-unicos.sql`](../sql/02-exploracion/01-valores-unicos.sql) | Conteo de valores distintos por columna. |
-| [`sql/02-exploracion/02-rango-fechas.sql`](../sql/02-exploracion/02-rango-fechas.sql) | Rango temporal y distribución por década. |
 | [`sql/02-exploracion/03-estadisticas-numericas.sql`](../sql/02-exploracion/03-estadisticas-numericas.sql) | Media, desviación, percentiles de edad y sueldos. |
 | [`sql/02-exploracion/04-duplicados-categoricos.sql`](../sql/02-exploracion/04-duplicados-categoricos.sql) | Detección de personas físicas con múltiples nombramientos. |
 | [`sql/02-exploracion/05-distribucion-categorica.sql`](../sql/02-exploracion/05-distribucion-categorica.sql) | Frecuencias relativas de sexo, tipos, sectores top. |
 | [`sql/02-exploracion/06-valores-nulos.sql`](../sql/02-exploracion/06-valores-nulos.sql) | Conteo y porcentaje de NULL por columna. |
-| [`sql/02-exploracion/07-inconsistencias.sql`](../sql/02-exploracion/07-inconsistencias.sql) | Detección de violaciones semánticas (edad <15, sueldos negativos, neto>bruto, fechas futuras, nombres ultracortos). |
+| [`sql/02-exploracion/07-inconsistencias.sql`](../sql/02-exploracion/07-inconsistencias.sql) | Detección de violaciones semánticas (edad <15, sueldos negativos, neto>bruto, nombres ultracortos). |
+| [`sql/02-exploracion/08-columnas-redundantes.sql`](../sql/02-exploracion/08-columnas-redundantes.sql) | Evaluación de dependencias funcionales entre columnas del staging para detectar redundancias residuales. |
 
 ## Outputs reales capturados
 
@@ -49,6 +49,19 @@ fecha, DB y archivo ejecutado.
 - 1,772 puestos distintos — la columna `puesto` es claramente
   catalogable (cardinalidad baja relativa al total).
 - Sólo 3 valores en `sexo` (MASCULINO, FEMENINO, NA).
+
+## Rango de Fechas
+
+El dataset oficial "Remuneraciones al personal de la Ciudad de México"
+publicado por la Secretaría de Administración y Finanzas (SAF) del
+Gobierno de la Ciudad de México en el Portal de Datos Abiertos no
+contiene columnas de naturaleza temporal (fechas, marcas de tiempo,
+periodos). Las 17 columnas del CSV oficial son atributos identitarios
+(nombre, apellidos, sexo, edad), administrativos (puesto, sector,
+tipo de nómina, universo laboral, nivel salarial) y económicos
+(sueldo bruto, sueldo neto). El análisis "Rango de Fechas" de la
+rúbrica de Etapa 2 no aplica a este dataset por ausencia de
+atributos temporales en la fuente oficial.
 
 ### Estadísticas numéricas
 
@@ -93,7 +106,7 @@ identificador único.
 
 (extracto de [`06-valores-nulos.txt`](../evidencias/consultas-resultados/02-exploracion/06-valores-nulos.txt))
 
-**Cero valores NULL en las 15 columnas no-PK** del staging. El
+**Cero valores NULL en las 14 columnas no-PK** del staging. El
 dataset está completamente lleno. Esto incluye `apellido_2`, lo que
 sugiere que los servidores sin segundo apellido aparecen con string
 vacío en el CSV original — un detalle académico para documentar al
@@ -110,7 +123,6 @@ adjudicar `NOT NULL` vs `NULL` en el esquema normalizado.
 | `edad > 90` | 0 | 0 |
 | `sueldo_bruto <= 0` | 0 | 0 |
 | `sueldo_neto <= 0` | 0 | 0 |
-| `fecha_ingreso > CURRENT_DATE` | 0 | 0 |
 | `nombre LENGTH < 2` | 0 | 0 |
 
 **Hallazgo crítico**: 11,426 filas (4.63% del padrón) presentan
@@ -123,6 +135,105 @@ académico** y se preserva en el esquema final (no se filtra ni se
 corrige) por respeto a la fidelidad del dataset oficial. La sección
 de [consideraciones éticas](consideraciones-eticas.md) discute el
 trade-off entre limpieza y fidelidad.
+
+## Columnas Redundantes
+
+(extracto de [`08-columnas-redundantes.txt`](../evidencias/consultas-resultados/02-exploracion/08-columnas-redundantes.txt))
+
+### Alcance del análisis
+
+Este análisis se ejecuta sobre la tabla `servidores_publicos` del
+staging preservado en el dump físico custodiado por el equipo técnico
+fundador (`api/remuneraciones_cdmx.dump`, 2026-04-20 16:16 CST),
+**no** sobre el CSV crudo del Portal de Datos Abiertos del Gobierno
+de la CDMX. La razón es operacional: el dump físico ya tiene los
+catálogos `puesto`, `sector`, `tipo_nomina`, `tipo_contratacion`,
+`tipo_personal` y `universo` extraídos como FK ids (`puesto_id`,
+`sector_id`, `tipo_nomina_id`, `tipo_contratacion_id`,
+`tipo_personal_id`, `universo_id`). Las redundancias clave-descriptor
+del CSV crudo (por ejemplo `id_universo` vs `n_universo`) ya quedaron
+resueltas en la extracción inicial de catálogos. Este análisis evalúa
+las dependencias funcionales que permanecen entre las columnas FK y
+entre FK y valores numéricos del staging.
+
+### Metodología
+
+Se evalúan cuatro dependencias funcionales candidatas. Para cada par
+clave→valor se compara `COUNT(DISTINCT clave)` con
+`COUNT(DISTINCT (clave, valor))`: si ambos coinciden, el valor es
+funcionalmente derivable de la clave (redundante); si difieren, la
+clave admite varios valores distintos (no redundante).
+
+Las cuatro dependencias evaluadas:
+
+1. `tipo_nomina_id → tipo_contratacion_id` — ¿el tipo de nómina determina el tipo de contratación?
+2. `puesto_id → id_nivel_salarial` — validación empírica de DF3 declarada como sospecha en [`dependencias-funcionales.md`](dependencias-funcionales.md).
+3. `id_nivel_salarial → (sueldo_bruto, sueldo_neto)` — ¿el nivel salarial determina los sueldos exactos?
+4. `puesto_id → (sueldo_bruto, sueldo_neto)` — ¿el puesto determina los sueldos directamente?
+
+### Hallazgos empíricos
+
+| # | Dependencia evaluada | Cardinalidad clave | Cardinalidad valor | Combinaciones únicas | Conclusión |
+|---|---|---:|---:|---:|---|
+| 1 | `tipo_nomina_id → tipo_contratacion_id` | 7 | 7 | 7 | **REDUNDANTE** |
+| 2 | `puesto_id → id_nivel_salarial` | 1,772 | 721 | 2,285 | NO redundante |
+| 3 | `id_nivel_salarial → (sueldo_bruto, sueldo_neto)` | 721 | 859 | 957 | NO redundante |
+| 4 | `puesto_id → (sueldo_bruto, sueldo_neto)` | 1,772 | 859 | 2,630 | NO redundante |
+
+**Interpretación**:
+
+- **Q1 confirma redundancia funcional**: los 7 tipos de nómina del
+  padrón mapean 1:1 con los 7 tipos de contratación. En el staging
+  ambas columnas siempre coinciden, por lo que `tipo_contratacion_id`
+  es derivable de `tipo_nomina_id` (o viceversa). Esta es una
+  redundancia residual no resuelta en la extracción inicial de
+  catálogos.
+- **Q2 refuta empíricamente DF3**: el documento
+  [`dependencias-funcionales.md`](dependencias-funcionales.md) declara
+  `puesto → nivel_salarial` como "sospecha empírica" motivada por los
+  15 puestos top con sueldos exactos repetidos por banda. La medición
+  contra los 1,772 puestos completos del padrón muestra 2,285
+  combinaciones únicas (≈1.29 niveles por puesto en promedio), por lo
+  que la dependencia funcional **no se cumple universalmente**.
+- **Q3 muestra variación intra-nivel**: el mismo `id_nivel_salarial`
+  admite 957 combinaciones distintas de sueldos sobre 721 niveles
+  (≈1.33 pares de sueldos por nivel). El tabulador del nivel no
+  determina exactamente los sueldos publicados.
+- **Q4 muestra variación intra-puesto**: el mismo `puesto_id` admite
+  2,630 combinaciones distintas de sueldos sobre 1,772 puestos
+  (≈1.48 pares de sueldos por puesto). El puesto no determina
+  exactamente los sueldos publicados, consistente con la realidad
+  observada de que servidores en el mismo puesto perciben sueldos
+  distintos por antigüedad u otros factores.
+
+### Conexión con normalización 4NF
+
+El hallazgo Q1 (redundancia `tipo_nomina_id ↔ tipo_contratacion_id`)
+**no estaba documentado** en
+[`dependencias-funcionales.md`](dependencias-funcionales.md) como DF
+identificada. Es una observación emergente de este análisis: en
+iteraciones futuras del esquema podría consolidarse a una sola columna
+con reducción adicional de redundancia. En el esquema 4NF actual ambas
+columnas se preservan como FK independientes a sus catálogos
+respectivos por fidelidad a la estructura del CSV oficial, que las
+publica como conceptos distintos.
+
+Los hallazgos Q2, Q3 y Q4 validan empíricamente que **la separación
+ya aplicada en el esquema 4NF es correcta**: las columnas
+`puesto_id`, `id_nivel_salarial`, `sueldo_bruto` y `sueldo_neto`
+contienen información independiente entre sí. La sospecha de DF3
+(`puesto → nivel_salarial`) declarada en
+[`dependencias-funcionales.md`](dependencias-funcionales.md) se
+documenta ahora como **refutada empíricamente** por la medición sobre
+los 1,772 puestos completos.
+
+### Conclusión académica
+
+El esquema 4NF actual está correctamente justificado por las
+dependencias funcionales reales del padrón. La única redundancia
+residual detectada (`tipo_nomina_id ↔ tipo_contratacion_id`) queda
+documentada como deuda académica menor para iteraciones futuras, sin
+afectar la corrección del modelo actual.
 
 ## Conclusiones para la Etapa 3
 

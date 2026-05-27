@@ -18,7 +18,6 @@ WITH conteos AS (
         COUNT(*) FILTER (WHERE tipo_nomina_id       IS NULL)        AS n_tipo_nomina,
         COUNT(*) FILTER (WHERE tipo_contratacion_id IS NULL)        AS n_tipo_contratacion,
         COUNT(*) FILTER (WHERE tipo_personal_id     IS NULL)        AS n_tipo_personal,
-        COUNT(*) FILTER (WHERE fecha_ingreso        IS NULL)        AS n_fecha_ingreso,
         COUNT(*) FILTER (WHERE universo_id          IS NULL)        AS n_universo,
         COUNT(*) FILTER (WHERE sector_id            IS NULL)        AS n_sector,
         COUNT(*) FILTER (WHERE id_nivel_salarial    IS NULL)        AS n_nivel_salarial,
@@ -35,7 +34,6 @@ UNION ALL SELECT 'puesto_id',                       n_puesto,             ROUND(
 UNION ALL SELECT 'tipo_nomina_id',                  n_tipo_nomina,        ROUND(100.0 * n_tipo_nomina/total, 4)      FROM conteos
 UNION ALL SELECT 'tipo_contratacion_id',            n_tipo_contratacion,  ROUND(100.0 * n_tipo_contratacion/total, 4) FROM conteos
 UNION ALL SELECT 'tipo_personal_id',                n_tipo_personal,      ROUND(100.0 * n_tipo_personal/total, 4)    FROM conteos
-UNION ALL SELECT 'fecha_ingreso',                   n_fecha_ingreso,      ROUND(100.0 * n_fecha_ingreso/total, 4)    FROM conteos
 UNION ALL SELECT 'universo_id',                     n_universo,           ROUND(100.0 * n_universo/total, 4)         FROM conteos
 UNION ALL SELECT 'sector_id',                       n_sector,             ROUND(100.0 * n_sector/total, 4)           FROM conteos
 UNION ALL SELECT 'id_nivel_salarial',               n_nivel_salarial,     ROUND(100.0 * n_nivel_salarial/total, 4)   FROM conteos

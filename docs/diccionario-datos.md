@@ -41,7 +41,6 @@ corte del padrón. Una persona puede tener N nombramientos.
 | `tipo_personal_id` | `INTEGER` | YES | — | FK → `cat_tipos_personal.id`. |
 | `universo_id` | `INTEGER` | YES | — | FK → `cat_universos.id`. |
 | `nivel_salarial_id` | `INTEGER` | YES | — | FK → `cat_niveles_salariales.id`. |
-| `fecha_ingreso` | `DATE` | YES | — | Fecha de inicio del nombramiento. |
 | `sueldo_bruto` | `NUMERIC(12,2)` | YES | — | Sueldo bruto mensual en MXN. Rango empírico: $461.00 - $111,178.00. |
 | `sueldo_neto` | `NUMERIC(12,2)` | YES | — | Sueldo neto mensual en MXN. **Caveat académico**: el 4.63% de filas presentan `sueldo_neto > sueldo_bruto`; la inconsistencia se preserva por fidelidad al dataset oficial (ver [Etapa 2](02-limpieza-carga-preliminar.md)). |
 
@@ -154,7 +153,7 @@ SELECT
     p.id, p.nombre, p.apellido_1, p.apellido_2,
     cs.nombre AS sexo, p.edad,
     n.puesto_id, n.tipo_nomina_id, n.tipo_contratacion_id,
-    n.tipo_personal_id, n.fecha_ingreso, n.universo_id, n.sector_id,
+    n.tipo_personal_id, n.universo_id, n.sector_id,
     cns.clave AS id_nivel_salarial, n.sueldo_bruto, n.sueldo_neto
 FROM personas p
 JOIN nombramientos n        ON n.persona_id = p.id

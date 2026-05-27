@@ -32,12 +32,6 @@ class TopPosition(BaseModel):
     avgSalary: float
 
 
-class SeniorityWithSalary(BaseModel):
-    label: str
-    avg: float
-    count: int
-
-
 class BrutoNetoRange(BaseModel):
     label: str
     avgBruto: float
@@ -70,9 +64,6 @@ class DashboardStats(BaseModel):
     allSectors: list[SectorStats]
     genderGapBySector: list[GenderGapSector]
     topPositions: list[TopPosition]
-    seniorityDistribution: list[LabelCount]
-    salaryBySeniority: list[SeniorityWithSalary]
-    avgSeniority: float
     avgNetSalary: float
     avgDeduction: float
     avgDeductionPercent: float

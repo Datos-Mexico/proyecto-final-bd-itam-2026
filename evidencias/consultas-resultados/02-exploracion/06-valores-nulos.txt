@@ -7,7 +7,6 @@ Fecha de ejecución: 2026-05-25 15:01:29 CST
  apellido_1           |      0 |   0.0000
  apellido_2           |      0 |   0.0000
  edad                 |      0 |   0.0000
- fecha_ingreso        |      0 |   0.0000
  id_nivel_salarial    |      0 |   0.0000
  nombre               |      0 |   0.0000
  puesto_id            |      0 |   0.0000
@@ -19,5 +18,5 @@ Fecha de ejecución: 2026-05-25 15:01:29 CST
  tipo_nomina_id       |      0 |   0.0000
  tipo_personal_id     |      0 |   0.0000
  universo_id          |      0 |   0.0000
-(15 rows)
+(14 rows)
 

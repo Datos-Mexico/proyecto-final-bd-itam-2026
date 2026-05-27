@@ -1,4 +1,3 @@
-import datetime
 from decimal import Decimal
 
 from pydantic import BaseModel
@@ -26,7 +25,6 @@ class ServidorDetail(BaseModel):
     edad: int | None
     sueldo_bruto: Decimal | None
     sueldo_neto: Decimal | None
-    fecha_ingreso: datetime.date | None
     id_nivel_salarial: int | None
     sector: str | None
     puesto: str | None

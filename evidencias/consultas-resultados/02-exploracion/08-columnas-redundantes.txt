@@ -1,0 +1,24 @@
+Ejecutado contra DB: proyecto_academico_staging_v2 (Postgres local restaurado desde dump 2026-04-20)
+Archivo: sql/02-exploracion/08-columnas-redundantes.sql
+Fecha de ejecución: 2026-05-26 19:07:16 CST
+---
+         dependencia_evaluada          | cardinalidad_clave | cardinalidad_valor | combinaciones_unicas |                          conclusion                          
+---------------------------------------+--------------------+--------------------+----------------------+--------------------------------------------------------------
+ tipo_nomina_id → tipo_contratacion_id |                  7 |                  7 |                    7 | REDUNDANTE: tipo_contratacion_id derivable de tipo_nomina_id
+(1 row)
+
+     dependencia_evaluada      | cardinalidad_clave | cardinalidad_valor | combinaciones_unicas |                                      conclusion                                      
+-------------------------------+--------------------+--------------------+----------------------+--------------------------------------------------------------------------------------
+ puesto_id → id_nivel_salarial |               1772 |                721 |                 2285 | NO redundante: el mismo puesto admite varios niveles salariales (DF3 no se confirma)
+(1 row)
+
+              dependencia_evaluada               | cardinalidad_clave | cardinalidad_par_sueldos | combinaciones_unicas |                           conclusion                           
+-------------------------------------------------+--------------------+--------------------------+----------------------+----------------------------------------------------------------
+ id_nivel_salarial → (sueldo_bruto, sueldo_neto) |                721 |                      859 |                  957 | NO redundante: hay variación de sueldos dentro del mismo nivel
+(1 row)
+
+          dependencia_evaluada           | cardinalidad_clave | cardinalidad_par_sueldos | combinaciones_unicas |                          conclusion                           
+-----------------------------------------+--------------------+--------------------------+----------------------+---------------------------------------------------------------
+ puesto_id → (sueldo_bruto, sueldo_neto) |               1772 |                      859 |                 2630 | NO redundante: el mismo puesto admite varios pares de sueldos
+(1 row)
+

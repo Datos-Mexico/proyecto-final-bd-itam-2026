@@ -40,6 +40,17 @@ extraída de `lib/team.ts` del repositorio del sitio canónico
 | Emiliano Sebastián Millán Giffard | Estudiante de Ciencia de Datos, ITAM | [@emilianomillan](https://github.com/emilianomillan) |
 | José Roberto Uribe Clemente | Estudiante de Ciencia de Datos, ITAM | [@RobertoUribeClemente](https://github.com/RobertoUribeClemente) |
 
+El Observatorio Datos México, derivado del trabajo de este proyecto,
+tiene actualmente una composición más amplia que incluye también
+miembros incorporados después del cierre del entregable académico del
+semestre. La composición vigente del observatorio se documenta en
+[datosmexico.org/quienes-somos](https://datosmexico.org/quienes-somos).
+Este repositorio refleja exclusivamente el equipo técnico fundador
+que ejecutó el proyecto académico del curso COM-12101-001.
+
+Detalles sobre la atribución de trabajo por integrante se documentan
+en [`docs/atribucion-equipo.md`](docs/atribucion-equipo.md).
+
 ---
 
 ## Conjunto de datos
