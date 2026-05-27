@@ -118,7 +118,7 @@ mexicanos (CDMX servidores públicos + ENIGH 2024 + CONSAR AFORE
 recursos + ENOE 15+) vía:
 
 - **SDK Python** [`datos-mexico`](https://pypi.org/project/datos-mexico/) instalable con `pip install datos-mexico`.
-- **API REST pública** en [`api.datos-itam.org`](https://api.datos-itam.org) con OpenAPI documentado.
+- **API REST pública** en [`api.datos-itam.org`](https://api.datos-itam.org/docs) con OpenAPI documentado.
 - **Sitio canónico** institucional en [`datosmexico.org`](https://datosmexico.org).
 
 Este repo académico se limita intencionalmente al **dataset CDMX**
