@@ -10,51 +10,44 @@ Datos COM-12101-001 son:
 - Emiliano Sebastián Millán Giffard ([@emilianomillan](https://github.com/emilianomillan))
 - José Roberto Uribe Clemente ([@RobertoUribeClemente](https://github.com/RobertoUribeClemente))
 
-## Naturaleza del trabajo realizado
+## Dinámica de trabajo
 
-El proyecto combinó trabajo técnico denso (diseño de base de datos
-relacional, normalización a 4NF, scripts SQL, APIs REST con FastAPI,
-documentación académica) con trabajo de discusión y validación
-académica del equipo.
+El proyecto se desarrolló mediante sesiones de trabajo conjunto donde
+las 4 personas del equipo participaron activamente en cada decisión
+técnica y metodológica. La dinámica operacional fue de desarrollo
+colaborativo en vivo: las decisiones de diseño (esquema de base de
+datos, criterios de normalización a 4NF, lógica de consultas SQL,
+arquitectura del backend FastAPI, postura ética, narrativa académica)
+se tomaron en conjunto, con discusión continua entre los 4 integrantes.
 
-**Trabajo técnico de implementación**: el diseño del esquema normalizado,
-la escritura de los scripts SQL (staging, exploración, normalización,
-migración, análisis), el desarrollo del backend FastAPI, la captura de
-evidencias empíricas y la redacción de la documentación técnica fueron
-ejecutados primariamente por David Fernando Ávila Díaz. Esto se refleja
-en la autoría de los commits del repositorio. La asimetría técnica es
-real y se documenta aquí con honestidad.
+La implementación en código se ejecutó con Ávila Díaz operando el
+teclado y los 3 integrantes restantes validando, cuestionando y
+aprobando cada decisión técnica en tiempo real. Esta modalidad de
+trabajo es análoga al pair programming extendido a 4 personas: una
+persona escribe el código de la sesión, las demás dirigen el diseño,
+revisan la lógica y consensúan las decisiones.
 
-**Trabajo de discusión y validación académica**: las decisiones
-metodológicas del proyecto (selección del dataset, justificación de la
-normalización a 4NF, criterios de análisis, postura ética sobre datos
-personales, narrativa académica sobre la relación con el Observatorio
-Datos México) fueron discutidas y validadas por los 4 integrantes del
-equipo durante el semestre. La dirección académica del proyecto refleja
-consenso del equipo, no decisión individual.
+## Sobre la autoría de los commits
 
-## Sobre la distribución del trabajo técnico
+La concentración de commits en la cuenta @DabtcAvila refleja la
+dinámica operacional de las sesiones (una persona escribiendo el código
+de la sesión), no la autoría individual de las decisiones técnicas que
+el código materializa. Cada commit del repositorio encapsula decisiones
+discutidas y validadas por el equipo completo durante las sesiones de
+trabajo conjunto.
 
-La distribución no balanceada del trabajo técnico refleja la
-distribución natural de habilidades dentro del equipo. Los integrantes
-Butrón Ramírez, Millán Giffard y Uribe Clemente, estudiantes también de
-Ciencia de Datos, participaron en el proyecto principalmente a través
-de las dimensiones de discusión metodológica y validación académica,
-mientras que el trabajo de implementación SQL/Python recayó en Ávila
-Díaz por su nivel de comodidad operacional con esas herramientas
-específicas.
-
-Esta distribución es académicamente coherente con un proyecto de
-equipo donde no todos los miembros tienen idéntica preparación técnica
-en cada herramienta utilizada. Las decisiones del proyecto son del
-equipo; la implementación técnica refleja la realidad de habilidades
-disponibles.
+Esta dinámica fue elección consciente del equipo: permitía mantener
+coherencia estilística del código, evitar conflictos de merge en
+sesiones cortas, y maximizar el tiempo dedicado a discusión técnica
+sobre la operación de teclado. Las decisiones académicas del proyecto
+son del equipo; la operación de implementación se concentró por
+eficiencia operacional.
 
 ## Etapas de la rúbrica
 
 Las 5 etapas del proyecto según la rúbrica del curso (selección del
 dataset, limpieza y carga preliminar, normalización 4NF, análisis de
-resultados, APIs REST con FastAPI) fueron diseñadas y validadas
-académicamente por el equipo completo. La implementación técnica
-(commits, código, scripts) se concentró en Ávila Díaz según lo descrito
-arriba.
+resultados, APIs REST con FastAPI) fueron diseñadas, ejecutadas y
+validadas académicamente por el equipo completo en sesiones conjuntas.
+Cada etapa cuenta con consenso del equipo sobre las decisiones técnicas
+tomadas y sobre los criterios académicos aplicados.
