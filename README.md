@@ -4,6 +4,14 @@
 
 > Snapshot académico del Observatorio Datos México.
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=eEzjg_IHslI">
+    <img src="https://img.youtube.com/vi/eEzjg_IHslI/maxresdefault.jpg" alt="Observatorio Datos México — video introductorio" width="640">
+  </a>
+</p>
+
+<p align="center"><em>Video introductorio del observatorio · 37 segundos</em></p>
+
 ---
 
 ## Resumen del proyecto

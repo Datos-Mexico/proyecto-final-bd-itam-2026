@@ -51,7 +51,7 @@ título maestro + subtítulo + tagline + separador + secciones.
 
 ---
 
-## 3. Ubicación de inserción propuesta
+## 3. Ubicación de inserción aplicada
 
 El bloque del video se inserta **entre el tagline (línea 5) y el
 separador (línea 7)**. Esto coloca el video como el primer elemento
@@ -69,17 +69,18 @@ Justificación de la ubicación:
   del primer texto descriptivo, coherente con la apertura visual de
   la presentación oral del proyecto académico.
 
-Diff propuesto (formato literal):
+Diff aplicado (formulación final aprobada por el CEO):
 
 ```diff
  > Snapshot académico del Observatorio Datos México.
 
-+## Video introductorio
++<p align="center">
++  <a href="https://www.youtube.com/watch?v=eEzjg_IHslI">
++    <img src="https://img.youtube.com/vi/eEzjg_IHslI/maxresdefault.jpg" alt="Observatorio Datos México — video introductorio" width="640">
++  </a>
++</p>
 +
-+[![Observatorio Datos México — video introductorio](https://img.youtube.com/vi/eEzjg_IHslI/maxresdefault.jpg)](https://www.youtube.com/watch?v=eEzjg_IHslI)
-+
-+Presentación visual del observatorio, sus objetivos y su alcance
-+institucional. Duración: 37 segundos.
++<p align="center"><em>Video introductorio del observatorio · 37 segundos</em></p>
 +
  ---
 
@@ -88,25 +89,35 @@ Diff propuesto (formato literal):
 
 ---
 
-## 4. Texto literal del bloque a insertar
+## 4. Texto literal del bloque insertado (formulación final aprobada)
 
-```markdown
-## Video introductorio
+```html
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=eEzjg_IHslI">
+    <img src="https://img.youtube.com/vi/eEzjg_IHslI/maxresdefault.jpg" alt="Observatorio Datos México — video introductorio" width="640">
+  </a>
+</p>
 
-[![Observatorio Datos México — video introductorio](https://img.youtube.com/vi/eEzjg_IHslI/maxresdefault.jpg)](https://www.youtube.com/watch?v=eEzjg_IHslI)
-
-Presentación visual del observatorio, sus objetivos y su alcance
-institucional. Duración: 37 segundos.
+<p align="center"><em>Video introductorio del observatorio · 37 segundos</em></p>
 ```
 
+Cambios respecto a la propuesta original de sub-fase 1:
+- Sin heading `## Video introductorio` (eliminado para no competir
+  jerárquicamente con el subtítulo institucional ITAM Primavera 2026).
+- Sin párrafo descriptivo de dos líneas (reemplazado por caption breve
+  en cursiva).
+- HTML `<p align="center">` para centrar el thumbnail en la página
+  del README renderizado por GitHub.
+- Ancho del thumbnail fijado en `640px` para presencia visual sin
+  desbordar el ancho de lectura.
+
 Notas técnicas:
-- El bloque es Markdown estándar (`[![alt](thumbnail)](url)`), compatible
-  con el renderer de GitHub. Al clickear la imagen, se abre el video en
-  YouTube en una pestaña nueva.
+- HTML estándar compatible con el renderer de GitHub. Al clickear la
+  imagen, se abre el video en YouTube en una pestaña nueva.
 - El `alt` text es académicamente honesto y no contiene términos de
   herramientas externas.
-- La descripción debajo del thumbnail (2 líneas) contextualiza al
-  lector sobre el contenido del video sin redundar con el alt text.
+- El caption en cursiva (`<em>`) contextualiza brevemente al lector
+  sobre el contenido y duración del video.
 
 ---
 
