@@ -75,8 +75,12 @@ públicos mexicanos consumible por terceros académicos.
 |---|---|---|
 | **API REST** | privada (deuda técnica documentada) | `api.datos-itam.org` |
 | **SDK Python** `datos-mexico` | [`Datos-Mexico/datos-mexico-py`](https://github.com/Datos-Mexico/datos-mexico-py) público | PyPI: `pip install datos-mexico` |
-| **Sitio canónico** | [`Datos-Mexico/datos-mexico-site`](https://github.com/Datos-Mexico/datos-mexico-site) público | `datosmexico.org` |
+| **Sitio canónico** | `Datos-Mexico/datos-mexico-site` privado | `datosmexico.org` |
 | **Repo académico** | `Datos-Mexico/proyecto-final-bd-itam-2026` (este repo) | público con licencia MIT |
+
+El repositorio del sitio es privado por decisión editorial: el sitio
+es vehículo de comunicación, no contribución académica directa. El
+corpus, la API y el SDK permanecen públicos.
 
 ### Deuda técnica honesta
 
