@@ -146,9 +146,8 @@ consumibles por terceros:
   [`github.com/Datos-Mexico/datos-mexico-py`](https://github.com/Datos-Mexico/datos-mexico-py),
   paquete disponible en PyPI (`pip install datos-mexico`),
   licencia MIT.
-- **Sitio canónico `datosmexico.org`** — código fuente público en
-  [`github.com/Datos-Mexico/datos-mexico-site`](https://github.com/Datos-Mexico/datos-mexico-site),
-  licencia MIT.
+- **Sitio canónico** — el sitio del observatorio
+  (datosmexico.org).
 - **API REST pública** — `api.datos-itam.org` sirve los endpoints
   analíticos sin autenticación; especificación OpenAPI disponible
   en `api.datos-itam.org/openapi.json`.
